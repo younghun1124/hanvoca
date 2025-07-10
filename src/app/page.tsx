@@ -184,12 +184,31 @@ export default function Home() {
                 {feedback}
               </p>
               
-              <button
-                onClick={resetChallenge}
-                className="mt-3 w-full bg-gray-100 text-gray-700 py-2 rounded-lg font-medium hover:bg-gray-200 transition-colors"
-              >
-                Try Again
-              </button>
+              <div className="mt-3 space-y-2">
+                {isCorrect ? (
+                  <div className="space-y-2">
+                    <button
+                      onClick={() => window.location.href = '/complete'}
+                      className="w-full bg-green-500 text-white py-2 rounded-lg font-medium hover:bg-green-600 transition-colors"
+                    >
+                      Continue to Special Offer 🎉
+                    </button>
+                    <button
+                      onClick={resetChallenge}
+                      className="w-full bg-gray-100 text-gray-700 py-2 rounded-lg font-medium hover:bg-gray-200 transition-colors"
+                    >
+                      Try Another Challenge
+                    </button>
+                  </div>
+                ) : (
+                  <button
+                    onClick={resetChallenge}
+                    className="w-full bg-gray-100 text-gray-700 py-2 rounded-lg font-medium hover:bg-gray-200 transition-colors"
+                  >
+                    Try Again
+                  </button>
+                )}
+              </div>
             </div>
           )}
         </div>
