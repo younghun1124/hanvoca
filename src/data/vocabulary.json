@@ -1,0 +1,62 @@
+[
+  {
+    "id": 1,
+    "answer": "익혀서",
+    "korean_sentence": "그는 10년 동안 요리 기술을 _____ 전문 셰프가 되었다.",
+    "english_translation": "He mastered cooking skills for 10 years and became a professional chef."
+  },
+  {
+    "id": 2,
+    "answer": "지내고",
+    "korean_sentence": "여행 중에 호텔에서 일주일 동안 _____ 있어요.",
+    "english_translation": "I'm staying at a hotel for a week during my trip."
+  },
+  {
+    "id": 3,
+    "answer": "수리했다",
+    "korean_sentence": "망가진 자동차를 정비소에서 _____.",
+    "english_translation": "The broken car was repaired at the garage."
+  },
+  {
+    "id": 4,
+    "answer": "완성했다",
+    "korean_sentence": "화가가 3년 만에 대작을 _____.",
+    "english_translation": "The painter completed his masterpiece after 3 years."
+  },
+  {
+    "id": 5,
+    "answer": "취득했다",
+    "korean_sentence": "그녀는 어제 운전면허를 _____.",
+    "english_translation": "She obtained her driver's license yesterday."
+  },
+  {
+    "id": 6,
+    "answer": "경비가",
+    "korean_sentence": "이번 출장 _____회사 예산을 초과했다.",
+    "english_translation": "This business trip expenses exceeded the company budget."
+  },
+  {
+    "id": 7,
+    "answer": "소망한다",
+    "korean_sentence": "모든 부모는 자녀의 행복을 간절히 _____.",
+    "english_translation": "All parents earnestly wish for their children's happiness."
+  },
+  {
+    "id": 8,
+    "answer": "사고가",
+    "korean_sentence": "어제 고속도로에서 큰 교통_____ 발생했다.",
+    "english_translation": "A major traffic accident occurred on the highway yesterday."
+  },
+  {
+    "id": 9,
+    "answer": "못",
+    "korean_sentence": "다리를 다쳐서 계단을 혼자 _____ 올라가요.",
+    "english_translation": "I can't climb the stairs alone because I injured my leg."
+  },
+  {
+    "id": 10,
+    "answer": "마다",
+    "korean_sentence": "그는 매일 아침 _____ 30분씩 운동을 한다.",
+    "english_translation": "He exercises for 30 minutes every morning."
+  }
+]
