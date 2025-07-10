@@ -13,8 +13,8 @@
   },
   {
     "id": 3,
-    "answer": "수리했다",
-    "korean_sentence": "망가진 자동차를 정비소에서 _____.",
+    "answer": "수리됐다",
+    "korean_sentence": "망가진 자동차가 정비소에서 _____.",
     "english_translation": "The broken car was repaired at the garage."
   },
   {
@@ -56,7 +56,7 @@
   {
     "id": 10,
     "answer": "마다",
-    "korean_sentence": "그는 매일 아침 _____ 30분씩 운동을 한다.",
-    "english_translation": "He exercises for 30 minutes every morning."
+    "korean_sentence": "사람_____ 성격과 생각이 모두 다르다.",
+    "english_translation": "Each person has a different personality and way of thinking."
   }
 ]

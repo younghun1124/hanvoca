@@ -1,22 +1,20 @@
 'use client'
 
 import { useState } from 'react'
+import vocabularyData from '../data/vocabulary.json'
 
 export default function Home() {
+  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0)
   const [userInput, setUserInput] = useState('')
   const [isCorrect, setIsCorrect] = useState<boolean | null>(null)
   const [feedback, setFeedback] = useState('')
   const [showFeedback, setShowFeedback] = useState(false)
   const [isSubmitting, setIsSubmitting] = useState(false)
 
-  // Today's vocabulary challenge
-  const challenge = {
-    english: 'I studied hastily because there wasn\'t much time left for the exam.',
-    korean: '시험 시간이 얼마 남지 않아서 _____ 공부했다.',
-    targetWord: '부리나케',
-    meaning: 'hastily, hurriedly',
-    englishWord: 'hastily'
-  }
+  // Get current question from vocabulary data
+  const currentQuestion = vocabularyData[currentQuestionIndex]
+  const totalQuestions = vocabularyData.length
+  const isLastQuestion = currentQuestionIndex === totalQuestions - 1
 
   const checkAnswer = async (sentence: string, guess: string) => {
     try {
@@ -49,21 +47,10 @@ export default function Home() {
       console.error('API Error:', error)
       
       // Enhanced fallback logic for local testing
-      if (guess.trim() === challenge.targetWord) {
-        return "✅ Correct! Great job! '부리나케' means 'hastily, hurriedly'"
+      if (guess.trim() === currentQuestion.answer) {
+        return "✅ Correct! Great job!"
       } else {
-        // Provide helpful feedback for common alternatives
-        const commonAlternatives: { [key: string]: string } = {
-          '서둘러': "Good try! '서둘러' means 'in a hurry' which is close. Try finding a word that emphasizes doing something more quickly or hastily.",
-          '빨리': "'빨리' means 'quickly' which is related, but we need a word that specifically means 'hastily' or 'hurriedly'.",
-          '급히': "'급히' means 'urgently' which is very close! But there's another word that's even more specific for 'hastily'.",
-          '천천히': "That means 'slowly' which is the opposite of what we need! Try thinking of a word that means 'hastily'."
-        }
-        
-        const feedbackMessage = commonAlternatives[guess.trim()] || 
-          `❌ Not quite right. The correct answer is '${challenge.targetWord}' which means '${challenge.meaning}'. Try again!`
-        
-        return feedbackMessage
+        return `❌ Not quite right. The correct answer is '${currentQuestion.answer}'. Try again!`
       }
     }
   }
@@ -77,16 +64,16 @@ export default function Home() {
 
     setIsSubmitting(true)
     
-    // Prepare sentence with the user's guess
-    const sentenceWithGuess = `시험 시간이 얼마 남지 않아서 [${userInput.trim()}] 공부했다.`
+    // Prepare sentence with the CORRECT ANSWER in brackets for API
+    const sentenceWithCorrectAnswer = currentQuestion.korean_sentence.replace('_____', `[${currentQuestion.answer}]`)
     
     try {
-      const feedbackMessage = await checkAnswer(sentenceWithGuess, userInput.trim())
+      const feedbackMessage = await checkAnswer(sentenceWithCorrectAnswer, userInput.trim())
       
       // Check if it's a correct answer (simple heuristic)
       const isAnswerCorrect = feedbackMessage.includes('✅') || 
                              feedbackMessage.toLowerCase().includes('correct') ||
-                             userInput.trim() === challenge.targetWord
+                             userInput.trim() === currentQuestion.answer
       
       setIsCorrect(isAnswerCorrect)
       setFeedback(feedbackMessage)
@@ -99,6 +86,13 @@ export default function Home() {
     }
     
     setIsSubmitting(false)
+  }
+
+  const goToNextQuestion = () => {
+    if (currentQuestionIndex < totalQuestions - 1) {
+      setCurrentQuestionIndex(currentQuestionIndex + 1)
+      resetChallenge()
+    }
   }
 
   const resetChallenge = () => {
@@ -117,6 +111,9 @@ export default function Home() {
     }
   }
 
+  // Split Korean sentence into parts for rendering
+  const koreanParts = currentQuestion.korean_sentence.split('_____')
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-100 to-purple-100 p-4">
       <div className="max-w-md mx-auto pt-12">
@@ -129,7 +126,7 @@ export default function Home() {
         {/* Progress indicator */}
         <div className="flex justify-center mb-6">
           <div className="bg-blue-500 text-white px-3 py-1 rounded-full text-sm font-medium">
-            Level 1/20
+            Question {currentQuestionIndex + 1}/{totalQuestions}
           </div>
         </div>
 
@@ -139,7 +136,7 @@ export default function Home() {
           <div className="mb-6">
             <div className="bg-blue-50 rounded-lg p-4">
               <p className="text-lg text-gray-800 leading-relaxed font-medium">
-                {challenge.english}
+                {currentQuestion.english_translation}
               </p>
             </div>
           </div>
@@ -147,7 +144,7 @@ export default function Home() {
           {/* Korean sentence with blank */}
           <div className="mb-6">
             <p className="text-lg text-gray-800 leading-relaxed">
-              시험 시간이 얼마 남지 않아서{' '}
+              {koreanParts[0]}
               <span className="relative inline-block">
                 <input
                   type="text"
@@ -158,7 +155,7 @@ export default function Home() {
                   disabled={isSubmitting}
                 />
               </span>
-              {' '}공부했다.
+              {koreanParts[1]}
             </p>
           </div>
 
@@ -187,17 +184,26 @@ export default function Home() {
               <div className="mt-3 space-y-2">
                 {isCorrect ? (
                   <div className="space-y-2">
-                    <button
-                      onClick={() => window.location.href = '/complete'}
-                      className="w-full bg-green-500 text-white py-2 rounded-lg font-medium hover:bg-green-600 transition-colors"
-                    >
-                      Continue to Special Offer 🎉
-                    </button>
+                    {isLastQuestion ? (
+                      <button
+                        onClick={() => window.location.href = '/complete'}
+                        className="w-full bg-green-500 text-white py-2 rounded-lg font-medium hover:bg-green-600 transition-colors"
+                      >
+                        Complete All Challenges 🎉
+                      </button>
+                    ) : (
+                      <button
+                        onClick={goToNextQuestion}
+                        className="w-full bg-green-500 text-white py-2 rounded-lg font-medium hover:bg-green-600 transition-colors"
+                      >
+                        Next Question →
+                      </button>
+                    )}
                     <button
                       onClick={resetChallenge}
                       className="w-full bg-gray-100 text-gray-700 py-2 rounded-lg font-medium hover:bg-gray-200 transition-colors"
                     >
-                      Try Another Challenge
+                      Try Again
                     </button>
                   </div>
                 ) : (
@@ -215,10 +221,9 @@ export default function Home() {
 
         {/* Vocabulary hint card */}
         <div className="bg-white rounded-xl shadow-sm p-4 mb-6">
-          <h3 className="text-sm font-medium text-gray-600 mb-2">Today's Vocabulary</h3>
-          <div className="flex items-center justify-between">
-            <span className="text-xl font-bold text-blue-600">{challenge.targetWord}</span>
-            <span className="text-gray-600 italic">{challenge.meaning}</span>
+          <h3 className="text-sm font-medium text-gray-600 mb-2">Hint</h3>
+          <div className="text-gray-700 text-sm">
+            <p>Look at the English sentence above for context clues!</p>
           </div>
         </div>
 
