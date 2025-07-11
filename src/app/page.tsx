@@ -114,6 +114,24 @@ export default function Home() {
   // Split Korean sentence into parts for rendering
   const koreanParts = currentQuestion.korean_sentence.split('_____')
 
+  // Function to highlight the target word in English sentence
+  const highlightTargetWord = (sentence: string, targetWord: string) => {
+    const regex = new RegExp(`\\b${targetWord}\\b`, 'gi')
+    return sentence.split(regex).map((part, index, array) => {
+      if (index < array.length - 1) {
+        return (
+          <span key={index}>
+            {part}
+            <span className="bg-yellow-200 px-1 py-0.5 rounded font-semibold text-blue-700 border-2 border-yellow-300">
+              {targetWord}
+            </span>
+          </span>
+        )
+      }
+      return part
+    })
+  }
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-100 to-purple-100 p-4">
       <div className="max-w-md mx-auto pt-12">
@@ -132,12 +150,17 @@ export default function Home() {
 
         {/* Main Challenge Card */}
         <div className="bg-white rounded-2xl shadow-lg p-6 mb-6">
-          {/* English sentence (reference) */}
+          {/* English sentence (reference) with highlighted target word */}
           <div className="mb-6">
             <div className="bg-blue-50 rounded-lg p-4">
-              <p className="text-lg text-gray-800 leading-relaxed font-medium">
-                {currentQuestion.english_translation}
+              <p className="text-lg text-gray-800 leading-relaxed font-medium mb-3">
+                {highlightTargetWord(currentQuestion.english_translation, currentQuestion.highlight_word)}
               </p>
+              <div className="flex items-center justify-center">
+                <div className="bg-white rounded-full px-3 py-1 text-sm text-gray-600 border border-yellow-300">
+                  <span className="text-yellow-600">✨</span> Translate the highlighted word to Korean
+                </div>
+              </div>
             </div>
           </div>
 

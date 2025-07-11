@@ -3,60 +3,70 @@
     "id": 1,
     "answer": "익혀서",
     "korean_sentence": "그는 10년 동안 요리 기술을 _____ 전문 셰프가 되었다.",
-    "english_translation": "He mastered cooking skills for 10 years and became a professional chef."
+    "english_translation": "He mastered cooking skills for 10 years and became a professional chef.",
+    "highlight_word": "mastered"
   },
   {
     "id": 2,
     "answer": "지내고",
     "korean_sentence": "여행 중에 호텔에서 일주일 동안 _____ 있어요.",
-    "english_translation": "I'm staying at a hotel for a week during my trip."
+    "english_translation": "I'm staying at a hotel for a week during my trip.",
+    "highlight_word": "staying"
   },
   {
     "id": 3,
     "answer": "수리됐다",
     "korean_sentence": "망가진 자동차가 정비소에서 _____.",
-    "english_translation": "The broken car was repaired at the garage."
+    "english_translation": "The broken car was repaired at the garage.",
+    "highlight_word": "repaired"
   },
   {
     "id": 4,
     "answer": "완성했다",
     "korean_sentence": "화가가 3년 만에 대작을 _____.",
-    "english_translation": "The painter completed his masterpiece after 3 years."
+    "english_translation": "The painter completed his masterpiece after 3 years.",
+    "highlight_word": "completed"
   },
   {
     "id": 5,
     "answer": "취득했다",
     "korean_sentence": "그녀는 어제 운전면허를 _____.",
-    "english_translation": "She obtained her driver's license yesterday."
+    "english_translation": "She obtained her driver's license yesterday.",
+    "highlight_word": "obtained"
   },
   {
     "id": 6,
     "answer": "경비가",
     "korean_sentence": "이번 출장 _____회사 예산을 초과했다.",
-    "english_translation": "This business trip expenses exceeded the company budget."
+    "english_translation": "This business trip expenses exceeded the company budget.",
+    "highlight_word": "expenses"
   },
   {
     "id": 7,
     "answer": "소망한다",
     "korean_sentence": "모든 부모는 자녀의 행복을 간절히 _____.",
-    "english_translation": "All parents earnestly wish for their children's happiness."
+    "english_translation": "All parents earnestly wish for their children's happiness.",
+    "highlight_word": "wish"
   },
   {
     "id": 8,
     "answer": "사고가",
     "korean_sentence": "어제 고속도로에서 큰 교통_____ 발생했다.",
-    "english_translation": "A major traffic accident occurred on the highway yesterday."
+    "english_translation": "A major traffic accident occurred on the highway yesterday.",
+    "highlight_word": "accident"
   },
   {
     "id": 9,
     "answer": "못",
     "korean_sentence": "다리를 다쳐서 계단을 혼자 _____ 올라가요.",
-    "english_translation": "I can't climb the stairs alone because I injured my leg."
+    "english_translation": "I can't climb the stairs alone because I injured my leg.",
+    "highlight_word": "can't"
   },
   {
     "id": 10,
     "answer": "마다",
-    "korean_sentence": "사람_____ 성격과 생각이 모두 다르다.",
-    "english_translation": "Each person has a different personality and way of thinking."
+    "korean_sentence": "그는 매일 아침 _____ 30분씩 운동을 한다.",
+    "english_translation": "He exercises for 30 minutes every morning.",
+    "highlight_word": "every"
   }
 ]
