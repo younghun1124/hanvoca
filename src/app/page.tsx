@@ -80,20 +80,39 @@ export default function Home() {
     }
   }
 
+  // Get or create user ID for tracking
+  const getUserId = () => {
+    if (typeof window === 'undefined') return null
+    
+    let userId = localStorage.getItem('hanvoca_user_id')
+    if (!userId) {
+      userId = crypto.randomUUID()
+      localStorage.setItem('hanvoca_user_id', userId)
+      console.log('Created new user ID:', userId)
+    } else {
+      console.log('Using existing user ID:', userId)
+    }
+    return userId
+  }
+
   const checkAnswer = async (sentence: string, guess: string) => {
     try {
       console.log('Sending API request:', { sentence, guess })
+      
+      const userId = getUserId()
       
       const response = await fetch('https://whlfxkvrmdzgscnlklmn.supabase.co/functions/v1/hanvoca', {
         method: 'POST',
         headers: {
           'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndobGZ4a3ZybWR6Z3NjbmxrbG1uIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDU5OTQwNjUsImV4cCI6MjA2MTU3MDA2NX0.R6aI0I3XLpfr7WEGuyYdwvULgt9HYszYNIx2R6P6tLI',
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          'X-User-ID': userId || 'anonymous'
         },
         credentials: "include",
         body: JSON.stringify({
           sentence: sentence,
-          guess: guess
+          guess: guess,
+          user_id: userId
         })
       })
 
