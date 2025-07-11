@@ -4,6 +4,7 @@ import { useState } from 'react'
 import vocabularyData from '../data/vocabulary.json'
 
 type AnswerLevel = 'best' | 'good' | 'acceptable' | 'needs_guidance'
+type HintLevel = 'semantic' | 'structural' | 'discovery'
 
 export default function Home() {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0)
@@ -14,11 +15,17 @@ export default function Home() {
   const [showLearningModal, setShowLearningModal] = useState(false)
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [userAnswerNote, setUserAnswerNote] = useState('')
+  
+  // Hint system state
+  const [hintsUsed, setHintsUsed] = useState<HintLevel[]>([])
+  const [showHints, setShowHints] = useState(false)
+  const [score, setScore] = useState(0)
+  const [totalQuestions, setTotalQuestions] = useState(0)
 
   // Get current question from vocabulary data
   const currentQuestion = vocabularyData[currentQuestionIndex]
-  const totalQuestions = vocabularyData.length
-  const isLastQuestion = currentQuestionIndex === totalQuestions - 1
+  const totalQuestionsCount = vocabularyData.length
+  const isLastQuestion = currentQuestionIndex === totalQuestionsCount - 1
 
   // Check which level the user's answer falls into
   const checkAnswerLevel = (userAnswer: string): AnswerLevel => {
@@ -49,6 +56,27 @@ export default function Home() {
         return `✅ 맞는 표현이에요! '${userAnswer}'도 사용할 수 있는 단어입니다.`
       case 'needs_guidance':
         return `🤔 '${userAnswer}'... 흥미로운 시도네요! 혹시 '${currentQuestion.highlight_word}'의 의미를 다른 방식으로 표현해볼까요?`
+    }
+  }
+
+  // Calculate score based on answer level and hints used
+  const calculateScore = (level: AnswerLevel, hintsUsedCount: number): number => {
+    let baseScore = 0
+    switch (level) {
+      case 'best': baseScore = 100; break
+      case 'good': baseScore = 80; break
+      case 'acceptable': baseScore = 60; break
+      case 'needs_guidance': baseScore = 0; break
+    }
+    
+    // Penalty for using hints
+    const hintPenalty = hintsUsedCount * 15
+    return Math.max(baseScore - hintPenalty, 0)
+  }
+
+  const useHint = (hintType: HintLevel) => {
+    if (!hintsUsed.includes(hintType)) {
+      setHintsUsed([...hintsUsed, hintType])
     }
   }
 
@@ -95,6 +123,13 @@ export default function Home() {
     const level = checkAnswerLevel(userInput.trim())
     setAnswerLevel(level)
     
+    // Calculate and update score
+    if (level !== 'needs_guidance') {
+      const questionScore = calculateScore(level, hintsUsed.length)
+      setScore(score + questionScore)
+      setTotalQuestions(totalQuestions + 1)
+    }
+    
     // Get user's answer note for learning modal
     const note = currentQuestion.learning_notes[userInput.trim() as keyof typeof currentQuestion.learning_notes]
     setUserAnswerNote(note || '')
@@ -121,7 +156,7 @@ export default function Home() {
   }
 
   const goToNextQuestion = () => {
-    if (currentQuestionIndex < totalQuestions - 1) {
+    if (currentQuestionIndex < totalQuestionsCount - 1) {
       setCurrentQuestionIndex(currentQuestionIndex + 1)
       resetChallenge()
     }
@@ -134,6 +169,8 @@ export default function Home() {
     setShowFeedback(false)
     setShowLearningModal(false)
     setUserAnswerNote('')
+    setHintsUsed([])
+    setShowHints(false)
   }
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -172,16 +209,23 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-100 to-purple-100 p-4">
       <div className="max-w-md mx-auto pt-12">
-        {/* Header */}
+        {/* Header with Score */}
         <div className="text-center mb-8">
           <h1 className="text-3xl font-bold text-gray-800 mb-2">Hanvoca</h1>
           <p className="text-gray-600 text-sm">Explore Korean vocabulary together</p>
+          {totalQuestions > 0 && (
+            <div className="mt-2 bg-yellow-100 rounded-full px-3 py-1 inline-block">
+              <span className="text-sm font-medium text-yellow-700">
+                🏆 Score: {score}/{totalQuestions * 100} ({Math.round((score / (totalQuestions * 100)) * 100)}%)
+              </span>
+            </div>
+          )}
         </div>
 
         {/* Progress indicator */}
         <div className="flex justify-center mb-6">
           <div className="bg-blue-500 text-white px-3 py-1 rounded-full text-sm font-medium">
-            Question {currentQuestionIndex + 1}/{totalQuestions}
+            Question {currentQuestionIndex + 1}/{totalQuestionsCount}
           </div>
         </div>
 
@@ -219,6 +263,91 @@ export default function Home() {
             </p>
           </div>
 
+          {/* Hint System */}
+          {!isCorrectAnswer && (
+            <div className="mb-6">
+              <button
+                onClick={() => setShowHints(!showHints)}
+                className="w-full bg-orange-100 text-orange-700 py-2 rounded-lg font-medium hover:bg-orange-200 transition-colors mb-3"
+              >
+                💡 Need a hint? Click here!
+              </button>
+              
+              {showHints && (
+                <div className="space-y-3 bg-orange-50 p-4 rounded-lg">
+                  {/* Hint 1: Semantic */}
+                  <div>
+                    <button
+                      onClick={() => useHint('semantic')}
+                      disabled={hintsUsed.includes('semantic')}
+                      className={`w-full text-left p-3 rounded-lg border transition-colors ${
+                        hintsUsed.includes('semantic')
+                          ? 'bg-green-50 border-green-200 text-green-700'
+                          : 'bg-white border-orange-200 hover:bg-orange-50 text-orange-700'
+                      }`}
+                    >
+                      <div className="flex items-center justify-between">
+                        <span className="font-medium">🔍 Hint 1: What does it mean?</span>
+                        <span className="text-sm">(-15 points)</span>
+                      </div>
+                    </button>
+                    {hintsUsed.includes('semantic') && (
+                      <div className="mt-2 p-3 bg-green-50 rounded-lg text-green-700 text-sm">
+                        {currentQuestion.hints.semantic}
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Hint 2: Structural */}
+                  <div>
+                    <button
+                      onClick={() => useHint('structural')}
+                      disabled={hintsUsed.includes('structural')}
+                      className={`w-full text-left p-3 rounded-lg border transition-colors ${
+                        hintsUsed.includes('structural')
+                          ? 'bg-green-50 border-green-200 text-green-700'
+                          : 'bg-white border-orange-200 hover:bg-orange-50 text-orange-700'
+                      }`}
+                    >
+                      <div className="flex items-center justify-between">
+                        <span className="font-medium">🧩 Hint 2: What does it look like?</span>
+                        <span className="text-sm">(-15 points)</span>
+                      </div>
+                    </button>
+                    {hintsUsed.includes('structural') && (
+                      <div className="mt-2 p-3 bg-green-50 rounded-lg text-green-700 text-sm">
+                        {currentQuestion.hints.structural}
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Hint 3: Discovery */}
+                  <div>
+                    <button
+                      onClick={() => useHint('discovery')}
+                      disabled={hintsUsed.includes('discovery')}
+                      className={`w-full text-left p-3 rounded-lg border transition-colors ${
+                        hintsUsed.includes('discovery')
+                          ? 'bg-green-50 border-green-200 text-green-700'
+                          : 'bg-white border-orange-200 hover:bg-orange-50 text-orange-700'
+                      }`}
+                    >
+                      <div className="flex items-center justify-between">
+                        <span className="font-medium">🎁 Hint 3: Show me an answer!</span>
+                        <span className="text-sm">(-15 points)</span>
+                      </div>
+                    </button>
+                    {hintsUsed.includes('discovery') && (
+                      <div className="mt-2 p-3 bg-green-50 rounded-lg text-green-700 text-sm">
+                        {currentQuestion.hints.discovery}
+                      </div>
+                    )}
+                  </div>
+                </div>
+              )}
+            </div>
+          )}
+
           {/* Submit button */}
           <button
             onClick={handleSubmit}
@@ -240,6 +369,16 @@ export default function Home() {
               }`}>
                 {feedback}
               </p>
+              
+              {/* Score display for correct answers */}
+              {isCorrectAnswer && (
+                <div className="mt-2 p-2 bg-yellow-50 rounded text-sm">
+                  <span className="font-medium text-yellow-700">
+                    🏆 +{calculateScore(answerLevel!, hintsUsed.length)} points 
+                    {hintsUsed.length > 0 && <span className="text-yellow-600"> (hints used: -{hintsUsed.length * 15})</span>}
+                  </span>
+                </div>
+              )}
               
               {userAnswerNote && (
                 <div className="mt-2 p-2 bg-white rounded text-sm text-gray-700">
