@@ -4,69 +4,188 @@
     "answer": "익혀서",
     "korean_sentence": "그는 10년 동안 요리 기술을 _____ 전문 셰프가 되었다.",
     "english_translation": "He mastered cooking skills for 10 years and became a professional chef.",
-    "highlight_word": "mastered"
+    "highlight_word": "mastered",
+    "acceptable_answers": {
+      "best": ["익혀서"],
+      "good": ["배워서", "습득해서"],
+      "acceptable": ["공부해서", "연마해서", "터득해서"]
+    },
+    "learning_notes": {
+      "익혀서": "가장 자연스러운 표현. '기술을 익히다'는 숙련도를 높인다는 의미입니다.",
+      "배워서": "일반적으로 많이 사용하는 표현이지만, '익히다'보다는 습득의 의미가 강해요.",
+      "습득해서": "조금 더 격식있는 표현. 주로 글에서 사용해요.",
+      "공부해서": "의미는 통하지만, '기술을 공부하다'보다는 '기술을 익히다'가 더 자연스러워요.",
+      "연마해서": "기술을 갈고 닦는다는 의미로, 문맥상 적절한 표현입니다.",
+      "터득해서": "스스로 깨우쳐 알게 되었다는 뜻으로, 좋은 표현이에요."
+    }
   },
   {
     "id": 2,
     "answer": "지내고",
     "korean_sentence": "여행 중에 호텔에서 일주일 동안 _____ 있어요.",
     "english_translation": "I'm staying at a hotel for a week during my trip.",
-    "highlight_word": "staying"
+    "highlight_word": "staying",
+    "acceptable_answers": {
+      "best": ["지내고"],
+      "good": ["머물고", "있고"],
+      "acceptable": ["살고", "보내고"]
+    },
+    "learning_notes": {
+      "지내고": "호텔에서 머무는 상황에 가장 자연스러운 표현입니다.",
+      "머물고": "'지내고'와 거의 같은 의미로, 임시로 어딘가에 있다는 뜻이에요.",
+      "있고": "간단하고 자연스러운 표현이지만, '지내고'가 더 구체적이에요.",
+      "살고": "영구적인 거주의 느낌이 있어서, 짧은 여행에는 어울리지 않아요.",
+      "보내고": "시간을 보낸다는 의미로는 맞지만, '머무는' 의미로는 부자연스러워요."
+    }
   },
   {
     "id": 3,
     "answer": "수리됐다",
     "korean_sentence": "망가진 자동차가 정비소에서 _____.",
     "english_translation": "The broken car was repaired at the garage.",
-    "highlight_word": "repaired"
+    "highlight_word": "repaired",
+    "acceptable_answers": {
+      "best": ["수리됐다", "수리되었다"],
+      "good": ["고쳐졌다", "정비됐다", "정비되었다"],
+      "acceptable": ["고쳐져서", "수선되었다"]
+    },
+    "learning_notes": {
+      "수리됐다": "가장 정확하고 일반적인 표현. '수리'는 기계나 차량을 고치는 전문 용어예요.",
+      "고쳐졌다": "순우리말로, 일상 대화에서 더 자주 사용하는 자연스러운 표현이에요.",
+      "정비됐다": "단순히 고치는 것을 넘어, 전체적으로 점검하고 정리한다는 의미가 강해요.",
+      "수선되었다": "의미는 통하지만, 보통 옷이나 작은 물건을 고칠 때 더 많이 써요."
+    }
   },
   {
     "id": 4,
     "answer": "완성했다",
     "korean_sentence": "화가가 3년 만에 대작을 _____.",
     "english_translation": "The painter completed his masterpiece after 3 years.",
-    "highlight_word": "completed"
+    "highlight_word": "completed",
+    "acceptable_answers": {
+      "best": ["완성했다"],
+      "good": ["마쳤다", "끝냈다"],
+      "acceptable": ["완료했다", "마무리했다"]
+    },
+    "learning_notes": {
+      "완성했다": "작품을 만드는 문맥에서 가장 적절한 표현입니다.",
+      "마쳤다": "일반적인 '끝내다'의 의미로, 자연스러운 표현이에요.",
+      "끝냈다": "간단하고 직접적인 표현이지만, '완성'의 느낌이 약해요.",
+      "완료했다": "업무나 과제에 더 어울리는 표현이에요.",
+      "마무리했다": "마지막 단계를 정리한다는 의미가 강해요."
+    }
   },
   {
     "id": 5,
     "answer": "취득했다",
     "korean_sentence": "그녀는 어제 운전면허를 _____.",
     "english_translation": "She obtained her driver's license yesterday.",
-    "highlight_word": "obtained"
+    "highlight_word": "obtained",
+    "acceptable_answers": {
+      "best": ["취득했다"],
+      "good": ["받았다", "얻었다"],
+      "acceptable": ["획득했다", "따냈다"]
+    },
+    "learning_notes": {
+      "취득했다": "자격증이나 면허를 얻을 때 사용하는 가장 정확한 표현입니다.",
+      "받았다": "일상적이고 자연스러운 표현이에요.",
+      "얻었다": "무언가를 손에 넣었다는 일반적인 의미로 좋은 표현입니다.",
+      "획득했다": "조금 더 격식있는 표현이에요.",
+      "따냈다": "구어체로 자주 사용하는 표현이지만, 격식있는 상황에는 부적절할 수 있어요."
+    }
   },
   {
     "id": 6,
     "answer": "경비가",
-    "korean_sentence": "이번 출장 _____회사 예산을 초과했다.",
+    "korean_sentence": "이번 출장 _____ 회사 예산을 초과했다.",
     "english_translation": "This business trip expenses exceeded the company budget.",
-    "highlight_word": "expenses"
+    "highlight_word": "expenses",
+    "acceptable_answers": {
+      "best": ["경비가"],
+      "good": ["비용이", "지출이"],
+      "acceptable": ["돈이", "예산이"]
+    },
+    "learning_notes": {
+      "경비가": "출장이나 업무 관련 비용을 나타내는 가장 정확한 표현입니다.",
+      "비용이": "일반적인 '돈이 드는 것'을 의미하는 자연스러운 표현이에요.",
+      "지출이": "돈을 쓴다는 의미로, 회계나 재정 관련해서 많이 사용해요.",
+      "돈이": "너무 일반적인 표현이라 공식적인 문맥에서는 부적절할 수 있어요.",
+      "예산이": "미리 정해둔 돈의 계획을 의미해서, 문맥상 어울리지 않아요."
+    }
   },
   {
     "id": 7,
     "answer": "소망한다",
     "korean_sentence": "모든 부모는 자녀의 행복을 간절히 _____.",
     "english_translation": "All parents earnestly wish for their children's happiness.",
-    "highlight_word": "wish"
+    "highlight_word": "wish",
+    "acceptable_answers": {
+      "best": ["소망한다"],
+      "good": ["바란다", "원한다"],
+      "acceptable": ["희망한다", "기원한다"]
+    },
+    "learning_notes": {
+      "소망한다": "간절한 마음으로 무언가를 바란다는 의미로, 가장 감정이 깊은 표현이에요.",
+      "바란다": "일상적으로 가장 많이 사용하는 자연스러운 표현입니다.",
+      "원한다": "바라거나 갖고 싶어한다는 의미로, 간단하고 직접적인 표현이에요.",
+      "희망한다": "조금 더 격식있는 표현으로, 글이나 공식적인 상황에서 사용해요.",
+      "기원한다": "종교적이거나 의식적인 느낌이 강한 표현이에요."
+    }
   },
   {
     "id": 8,
     "answer": "사고가",
-    "korean_sentence": "어제 고속도로에서 큰 교통_____ 발생했다.",
+    "korean_sentence": "어제 고속도로에서 큰 교통 _____ 발생했다.",
     "english_translation": "A major traffic accident occurred on the highway yesterday.",
-    "highlight_word": "accident"
+    "highlight_word": "accident",
+    "acceptable_answers": {
+      "best": ["사고가"],
+      "good": ["충돌이", "사건이"],
+      "acceptable": ["문제가", "일이"]
+    },
+    "learning_notes": {
+      "사고가": "교통사고를 나타내는 가장 정확하고 일반적인 표현입니다.",
+      "충돌이": "차량끼리 부딪히는 상황을 구체적으로 표현한 좋은 단어예요.",
+      "사건이": "어떤 일이 일어났다는 의미로 사용할 수 있지만, '사고'보다는 일반적이에요.",
+      "문제가": "너무 추상적인 표현이라 교통사고의 구체성이 부족해요.",
+      "일이": "가장 일반적인 표현이지만, 교통사고의 심각성을 표현하기에는 부족해요."
+    }
   },
   {
     "id": 9,
     "answer": "못",
     "korean_sentence": "다리를 다쳐서 계단을 혼자 _____ 올라가요.",
     "english_translation": "I can't climb the stairs alone because I injured my leg.",
-    "highlight_word": "can't"
+    "highlight_word": "can't",
+    "acceptable_answers": {
+      "best": ["못"],
+      "good": ["안", "할 수 없어서"],
+      "acceptable": ["어려워서"]
+    },
+    "learning_notes": {
+      "못": "능력이 없어서 할 수 없다는 의미로, 가장 정확한 표현입니다.",
+      "안": "의지적으로 하지 않는다는 의미가 강해서, 이 문맥에는 어울리지 않아요.",
+      "할 수 없어서": "문법적으로는 맞지만, '못'이 더 간결하고 자연스러워요.",
+      "어려워서": "힘들다는 의미로는 맞지만, '불가능'의 의미가 약해요."
+    }
   },
   {
     "id": 10,
     "answer": "마다",
     "korean_sentence": "그는 매일 아침 _____ 30분씩 운동을 한다.",
     "english_translation": "He exercises for 30 minutes every morning.",
-    "highlight_word": "every"
+    "highlight_word": "every",
+    "acceptable_answers": {
+      "best": ["마다"],
+      "good": ["마다마다", "때마다"],
+      "acceptable": ["다", "씩"]
+    },
+    "learning_notes": {
+      "마다": "'매일 아침마다'의 의미로, 반복되는 상황을 나타내는 가장 자연스러운 표현이에요.",
+      "마다마다": "같은 의미이지만 조금 중복적인 느낌이 있어요.",
+      "때마다": "의미는 비슷하지만, '아침 때마다'보다는 '아침마다'가 더 자연스러워요.",
+      "다": "문법적으로는 가능하지만, '마다'가 더 완전한 표현이에요.",
+      "씩": "분량을 나타내는 조사라서 이 문맥에는 맞지 않아요."
+    }
   }
 ]

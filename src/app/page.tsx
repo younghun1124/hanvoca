@@ -3,18 +3,54 @@
 import { useState } from 'react'
 import vocabularyData from '../data/vocabulary.json'
 
+type AnswerLevel = 'best' | 'good' | 'acceptable' | 'needs_guidance'
+
 export default function Home() {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0)
   const [userInput, setUserInput] = useState('')
-  const [isCorrect, setIsCorrect] = useState<boolean | null>(null)
+  const [answerLevel, setAnswerLevel] = useState<AnswerLevel | null>(null)
   const [feedback, setFeedback] = useState('')
   const [showFeedback, setShowFeedback] = useState(false)
+  const [showLearningModal, setShowLearningModal] = useState(false)
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const [userAnswerNote, setUserAnswerNote] = useState('')
 
   // Get current question from vocabulary data
   const currentQuestion = vocabularyData[currentQuestionIndex]
   const totalQuestions = vocabularyData.length
   const isLastQuestion = currentQuestionIndex === totalQuestions - 1
+
+  // Check which level the user's answer falls into
+  const checkAnswerLevel = (userAnswer: string): AnswerLevel => {
+    const trimmedAnswer = userAnswer.trim()
+    
+    if (currentQuestion.acceptable_answers.best.includes(trimmedAnswer)) {
+      return 'best'
+    }
+    if (currentQuestion.acceptable_answers.good.includes(trimmedAnswer)) {
+      return 'good'
+    }
+    if (currentQuestion.acceptable_answers.acceptable.includes(trimmedAnswer)) {
+      return 'acceptable'
+    }
+    
+    return 'needs_guidance'
+  }
+
+  const generateFeedback = (level: AnswerLevel, userAnswer: string): string => {
+    const note = currentQuestion.learning_notes[userAnswer as keyof typeof currentQuestion.learning_notes]
+    
+    switch (level) {
+      case 'best':
+        return `🎯 완벽해요! '${userAnswer}'는 이 문맥에서 가장 자연스러운 표현입니다.`
+      case 'good':
+        return `👍 좋은 표현이에요! '${userAnswer}'는 자연스럽게 사용할 수 있는 단어입니다.`
+      case 'acceptable':
+        return `✅ 맞는 표현이에요! '${userAnswer}'도 사용할 수 있는 단어입니다.`
+      case 'needs_guidance':
+        return `🤔 '${userAnswer}'... 흥미로운 시도네요! 혹시 '${currentQuestion.highlight_word}'의 의미를 다른 방식으로 표현해볼까요?`
+    }
+  }
 
   const checkAnswer = async (sentence: string, guess: string) => {
     try {
@@ -32,27 +68,18 @@ export default function Home() {
         })
       })
 
-      console.log('Response status:', response.status, response.statusText)
-
-      if (!response.ok) {
-        const errorText = await response.text()
-        console.error('API Error Response:', errorText)
-        throw new Error(`API Error: ${response.status} ${response.statusText}`)
+      if (response.ok) {
+        const data = await response.json()
+        console.log('API Response:', data)
+        return data.feedback
       }
-
-      const data = await response.json()
-      console.log('API Response:', data)
-      return data.feedback
     } catch (error) {
       console.error('API Error:', error)
-      
-      // Enhanced fallback logic for local testing
-      if (guess.trim() === currentQuestion.answer) {
-        return "✅ Correct! Great job!"
-      } else {
-        return `❌ Not quite right. The correct answer is '${currentQuestion.answer}'. Try again!`
-      }
     }
+    
+    // Always use our local smart feedback system
+    const level = checkAnswerLevel(guess)
+    return generateFeedback(level, guess)
   }
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -64,28 +91,33 @@ export default function Home() {
 
     setIsSubmitting(true)
     
+    // Check answer level first
+    const level = checkAnswerLevel(userInput.trim())
+    setAnswerLevel(level)
+    
+    // Get user's answer note for learning modal
+    const note = currentQuestion.learning_notes[userInput.trim() as keyof typeof currentQuestion.learning_notes]
+    setUserAnswerNote(note || '')
+    
     // Prepare sentence with the CORRECT ANSWER in brackets for API
     const sentenceWithCorrectAnswer = currentQuestion.korean_sentence.replace('_____', `[${currentQuestion.answer}]`)
     
     try {
       const feedbackMessage = await checkAnswer(sentenceWithCorrectAnswer, userInput.trim())
-      
-      // Check if it's a correct answer (simple heuristic)
-      const isAnswerCorrect = feedbackMessage.includes('✅') || 
-                             feedbackMessage.toLowerCase().includes('correct') ||
-                             userInput.trim() === currentQuestion.answer
-      
-      setIsCorrect(isAnswerCorrect)
       setFeedback(feedbackMessage)
       setShowFeedback(true)
     } catch (error) {
       console.error('Error checking answer:', error)
-      setFeedback('Sorry, there was an error checking your answer. Please try again.')
-      setIsCorrect(false)
+      const fallbackFeedback = generateFeedback(level, userInput.trim())
+      setFeedback(fallbackFeedback)
       setShowFeedback(true)
     }
     
     setIsSubmitting(false)
+  }
+
+  const showLearningExploration = () => {
+    setShowLearningModal(true)
   }
 
   const goToNextQuestion = () => {
@@ -97,19 +129,24 @@ export default function Home() {
 
   const resetChallenge = () => {
     setUserInput('')
-    setIsCorrect(null)
+    setAnswerLevel(null)
     setFeedback('')
     setShowFeedback(false)
+    setShowLearningModal(false)
+    setUserAnswerNote('')
   }
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setUserInput(e.target.value)
     if (showFeedback) {
       setShowFeedback(false)
-      setIsCorrect(null)
+      setAnswerLevel(null)
       setFeedback('')
+      setShowLearningModal(false)
     }
   }
+
+  const isCorrectAnswer = answerLevel && answerLevel !== 'needs_guidance'
 
   // Split Korean sentence into parts for rendering
   const koreanParts = currentQuestion.korean_sentence.split('_____')
@@ -138,7 +175,7 @@ export default function Home() {
         {/* Header */}
         <div className="text-center mb-8">
           <h1 className="text-3xl font-bold text-gray-800 mb-2">Hanvoca</h1>
-          <p className="text-gray-600 text-sm">Fill in the Korean vocabulary</p>
+          <p className="text-gray-600 text-sm">Explore Korean vocabulary together</p>
         </div>
 
         {/* Progress indicator */}
@@ -194,19 +231,31 @@ export default function Home() {
           {/* Feedback */}
           {showFeedback && (
             <div className={`p-4 rounded-lg border-2 ${
-              isCorrect 
+              isCorrectAnswer 
                 ? 'bg-green-50 border-green-200' 
-                : 'bg-red-50 border-red-200'
+                : 'bg-orange-50 border-orange-200'
             }`}>
               <p className={`font-medium ${
-                isCorrect ? 'text-green-700' : 'text-red-700'
+                isCorrectAnswer ? 'text-green-700' : 'text-orange-700'
               }`}>
                 {feedback}
               </p>
               
+              {userAnswerNote && (
+                <div className="mt-2 p-2 bg-white rounded text-sm text-gray-700">
+                  💡 {userAnswerNote}
+                </div>
+              )}
+              
               <div className="mt-3 space-y-2">
-                {isCorrect ? (
+                {isCorrectAnswer ? (
                   <div className="space-y-2">
+                    <button
+                      onClick={showLearningExploration}
+                      className="w-full bg-purple-500 text-white py-2 rounded-lg font-medium hover:bg-purple-600 transition-colors"
+                    >
+                      🚀 Explore More Expressions
+                    </button>
                     {isLastQuestion ? (
                       <button
                         onClick={() => window.location.href = '/complete'}
@@ -230,29 +279,106 @@ export default function Home() {
                     </button>
                   </div>
                 ) : (
-                  <button
-                    onClick={resetChallenge}
-                    className="w-full bg-gray-100 text-gray-700 py-2 rounded-lg font-medium hover:bg-gray-200 transition-colors"
-                  >
-                    Try Again
-                  </button>
+                  <div className="space-y-2">
+                    <button
+                      onClick={showLearningExploration}
+                      className="w-full bg-blue-500 text-white py-2 rounded-lg font-medium hover:bg-blue-600 transition-colors"
+                    >
+                      💡 Show Me Other Options
+                    </button>
+                    <button
+                      onClick={resetChallenge}
+                      className="w-full bg-gray-100 text-gray-700 py-2 rounded-lg font-medium hover:bg-gray-200 transition-colors"
+                    >
+                      Try Different Word
+                    </button>
+                  </div>
                 )}
               </div>
             </div>
           )}
         </div>
 
+        {/* Learning Exploration Modal */}
+        {showLearningModal && (
+          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
+            <div className="bg-white rounded-2xl p-6 max-w-sm w-full max-h-[80vh] overflow-y-auto">
+              <div className="flex justify-between items-center mb-4">
+                <h3 className="text-lg font-bold text-gray-800">🌟 Vocabulary Explorer</h3>
+                <button
+                  onClick={() => setShowLearningModal(false)}
+                  className="text-gray-500 hover:text-gray-700"
+                >
+                  ✕
+                </button>
+              </div>
+              
+              <p className="text-sm text-gray-600 mb-4">
+                Here are different ways to express the same meaning:
+              </p>
+
+              <div className="space-y-3">
+                {/* Best answers */}
+                <div>
+                  <h4 className="text-sm font-semibold text-green-600 mb-2">🎯 Best Expressions</h4>
+                  {currentQuestion.acceptable_answers.best.map((word, index) => (
+                    <div key={index} className="bg-green-50 p-2 rounded mb-2">
+                      <span className="font-medium text-green-700">{word}</span>
+                      <p className="text-xs text-green-600 mt-1">
+                        {currentQuestion.learning_notes[word as keyof typeof currentQuestion.learning_notes]}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+
+                {/* Good answers */}
+                <div>
+                  <h4 className="text-sm font-semibold text-blue-600 mb-2">👍 Good Expressions</h4>
+                  {currentQuestion.acceptable_answers.good.map((word, index) => (
+                    <div key={index} className="bg-blue-50 p-2 rounded mb-2">
+                      <span className="font-medium text-blue-700">{word}</span>
+                      <p className="text-xs text-blue-600 mt-1">
+                        {currentQuestion.learning_notes[word as keyof typeof currentQuestion.learning_notes]}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+
+                {/* Acceptable answers */}
+                <div>
+                  <h4 className="text-sm font-semibold text-purple-600 mb-2">✅ Also Acceptable</h4>
+                  {currentQuestion.acceptable_answers.acceptable.map((word, index) => (
+                    <div key={index} className="bg-purple-50 p-2 rounded mb-2">
+                      <span className="font-medium text-purple-700">{word}</span>
+                      <p className="text-xs text-purple-600 mt-1">
+                        {currentQuestion.learning_notes[word as keyof typeof currentQuestion.learning_notes]}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <button
+                onClick={() => setShowLearningModal(false)}
+                className="w-full mt-4 bg-gray-800 text-white py-2 rounded-lg font-medium hover:bg-gray-900 transition-colors"
+              >
+                Got it! 👌
+              </button>
+            </div>
+          </div>
+        )}
+
         {/* Vocabulary hint card */}
         <div className="bg-white rounded-xl shadow-sm p-4 mb-6">
-          <h3 className="text-sm font-medium text-gray-600 mb-2">Hint</h3>
+          <h3 className="text-sm font-medium text-gray-600 mb-2">💭 Think about it</h3>
           <div className="text-gray-700 text-sm">
-            <p>Look at the English sentence above for context clues!</p>
+            <p>What Korean word best expresses '<span className="font-semibold text-blue-600">{currentQuestion.highlight_word}</span>' in this context?</p>
           </div>
         </div>
 
         {/* Footer */}
         <div className="text-center text-gray-500 text-xs">
-          <p>Complete the sentence with the correct Korean vocabulary</p>
+          <p>Every answer teaches you something new! 📚</p>
         </div>
       </div>
     </div>
