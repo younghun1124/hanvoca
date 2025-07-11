@@ -108,7 +108,6 @@ export default function Home() {
           'Content-Type': 'application/json',
           'X-User-ID': userId || 'anonymous'
         },
-        credentials: "include",
         body: JSON.stringify({
           sentence: sentence,
           guess: guess,
