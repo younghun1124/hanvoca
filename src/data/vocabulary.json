@@ -239,13 +239,13 @@
     "highlight_word": "measure",
     "acceptable_answers": {
       "best": ["대책"],
-      "good": ["방안", "방법"],
+      "good": ["방안", "대안"],
       "acceptable": ["해결책", "조치"]
     },
     "learning_notes": {
       "대책": "Refers to a 'measure', 'countermeasure', or 'solution' specifically designed to deal with a problem or difficult situation. It implies a strategic plan of action.",
       "방안": "Means 'plan' or 'scheme', a broader term for a proposed idea.",
-      "방법": "Means 'method' or 'way', a general term for how something is done.",
+      "대안": "Means 'alternative' or 'alternative plan', suggesting a different option to choose from.",
       "해결책": "Means 'solution', specifically for resolving a problem. Can be very similar to 대책.",
       "조치": "Means 'action' or 'step (taken)', often used for official actions being implemented."
     },
