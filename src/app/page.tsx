@@ -5,6 +5,7 @@ import vocabularyData from '../data/vocabulary.json'
 
 type AnswerLevel = 'best' | 'good' | 'acceptable' | 'needs_guidance'
 type HintLevel = 'semantic' | 'structural' | 'discovery'
+type QuestionStatus = 'unanswered' | 'answered' | 'passed' | 'needs_retry'
 
 export default function Home() {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0)
@@ -20,13 +21,10 @@ export default function Home() {
   const [hintsUsed, setHintsUsed] = useState<HintLevel[]>([])
   const [showHints, setShowHints] = useState(false)
 
-
-  // Pass functionality state
-  const [passedQuestions, setPassedQuestions] = useState<number[]>([])
-  const [needsGuidanceQuestions, setNeedsGuidanceQuestions] = useState<number[]>([])
-  const [completedQuestions, setCompletedQuestions] = useState<number[]>([])
+  // Simplified state management
   const [questionOrder, setQuestionOrder] = useState<number[]>([])
-  const [isPassedQuestion, setIsPassedQuestion] = useState(false)
+  const [questionStatuses, setQuestionStatuses] = useState<Record<number, QuestionStatus>>({})
+  const [isInitialized, setIsInitialized] = useState(false)
 
   // Get questions for today based on date
   const getQuestionsForToday = () => {
@@ -55,20 +53,33 @@ export default function Home() {
     return selectedQuestions
   }
 
-  // Initialize question order
+  // Initialize question order and statuses
   useEffect(() => {
     const todayQuestions = getQuestionsForToday()
-    console.log('Initializing question order:', todayQuestions)
+    console.log('Initializing questions:', todayQuestions)
     setQuestionOrder(todayQuestions)
     setCurrentQuestionIndex(0)
+    
+    // Initialize all question statuses as unanswered
+    const initialStatuses: Record<number, QuestionStatus> = {}
+    todayQuestions.forEach(id => {
+      initialStatuses[id] = 'unanswered'
+    })
+    setQuestionStatuses(initialStatuses)
+    setIsInitialized(true)
   }, [])
 
   // Get current question from vocabulary data using question order
   const currentQuestionIndexInOrder = questionOrder[currentQuestionIndex]
   const currentQuestion = currentQuestionIndexInOrder !== undefined ? vocabularyData[currentQuestionIndexInOrder] : null
-  const totalQuestionsCount = vocabularyData.length
   const isLastQuestion = currentQuestionIndex === questionOrder.length - 1
   
+  // Check if current answer is correct
+  const isCorrectAnswer = answerLevel && answerLevel !== 'needs_guidance'
+  
+  // Check if we need to show complete button (this is the last question and we just answered correctly)
+  const shouldShowComplete = questionOrder.length === 1 && showFeedback && isCorrectAnswer
+
   // Safety check: if currentQuestionIndex is out of bounds, reset to 0
   if (currentQuestionIndex >= questionOrder.length && questionOrder.length > 0) {
     console.log('Current question index out of bounds, resetting to 0')
@@ -110,8 +121,6 @@ export default function Home() {
         return `🤔 '${userAnswer}'... 흥미로운 시도네요! 혹시 '${currentQuestion.highlight_word}'의 의미를 다른 방식으로 표현해볼까요?`
     }
   }
-
-
 
   const useHint = (hintType: HintLevel) => {
     if (!hintsUsed.includes(hintType)) {
@@ -181,15 +190,19 @@ export default function Home() {
     const level = checkAnswerLevel(userInput.trim())
     setAnswerLevel(level)
     
-    // Track question status
+    // Update question status
     const currentQuestionId = questionOrder[currentQuestionIndex]
-    if (level === 'needs_guidance' && !needsGuidanceQuestions.includes(currentQuestionId)) {
-      setNeedsGuidanceQuestions([...needsGuidanceQuestions, currentQuestionId])
-    } else if (level !== 'needs_guidance' && !completedQuestions.includes(currentQuestionId)) {
-      setCompletedQuestions([...completedQuestions, currentQuestionId])
+    if (level === 'needs_guidance') {
+      setQuestionStatuses(prev => ({
+        ...prev,
+        [currentQuestionId]: 'needs_retry'
+      }))
+    } else {
+      setQuestionStatuses(prev => ({
+        ...prev,
+        [currentQuestionId]: 'answered'
+      }))
     }
-    
-
     
     // Get user's answer note for learning modal
     const note = currentQuestion?.learning_notes[userInput.trim() as keyof typeof currentQuestion.learning_notes]
@@ -212,91 +225,28 @@ export default function Home() {
     setIsSubmitting(false)
   }
 
-  // Pass functionality
+  // Simplified pass functionality
   const handlePass = () => {
-    console.log('Pass clicked:', {
-      currentQuestionIndex,
-      questionOrderLength: questionOrder.length,
-      currentQuestionId: questionOrder[currentQuestionIndex],
-      passedQuestions: [...passedQuestions]
-    })
-    
     const currentQuestionId = questionOrder[currentQuestionIndex]
     
-    // Safety check: if no current question, reorganize
-    if (currentQuestionId === undefined) {
-      console.log('No current question, reorganizing')
-      reorganizeQuestions()
-      return
-    }
-    
-    // Add to passed questions if not already passed
-    let newPassedQuestions = [...passedQuestions]
-    if (!passedQuestions.includes(currentQuestionId)) {
-      newPassedQuestions = [...passedQuestions, currentQuestionId]
-      console.log('Adding to passed questions:', {
-        currentQuestionId,
-        newPassedQuestions
-      })
-      setPassedQuestions(newPassedQuestions)
-    }
+    // Mark as passed
+    setQuestionStatuses(prev => ({
+      ...prev,
+      [currentQuestionId]: 'passed'
+    }))
     
     // Move to next question
+    moveToNextQuestion()
+  }
+
+  // Move to next question in cycle
+  const moveToNextQuestion = () => {
     if (currentQuestionIndex < questionOrder.length - 1) {
       setCurrentQuestionIndex(currentQuestionIndex + 1)
-      resetChallenge()
     } else {
-      // If this was the last question, reorganize and start over
-      console.log('Last question reached, reorganizing with updated passed questions')
-      // Use the updated passed questions for reorganization
-      reorganizeQuestionsWithPassedQuestions(newPassedQuestions)
+      // Go back to first question
+      setCurrentQuestionIndex(0)
     }
-  }
-
-  // Reorganize questions: only show passed and needs_guidance questions once more
-  const reorganizeQuestions = () => {
-    reorganizeQuestionsWithPassedQuestions(passedQuestions)
-  }
-
-  // Reorganize questions with specific passed questions
-  const reorganizeQuestionsWithPassedQuestions = (passedQuestionsToUse: number[]) => {
-    // Use the original vocabulary data indices instead of current questionOrder
-    const allQuestionIds = Array.from({ length: vocabularyData.length }, (_, i) => i)
-    
-    console.log('Reorganize - Initial state:', {
-      allQuestionIds,
-      passedQuestions: passedQuestionsToUse,
-      needsGuidanceQuestions: [...needsGuidanceQuestions],
-      questionOrder: [...questionOrder]
-    })
-    
-    const passedQuestionsInOrder = passedQuestionsToUse.filter(id => allQuestionIds.includes(id))
-    const needsGuidanceQuestionsInOrder = needsGuidanceQuestions.filter(id => allQuestionIds.includes(id))
-    
-    // Only include questions that were passed or needs_guidance (exclude completed ones)
-    const questionsToRetry = [...passedQuestionsInOrder, ...needsGuidanceQuestionsInOrder]
-    
-    console.log('Reorganize - Filtered results:', {
-      passedQuestionsInOrder,
-      needsGuidanceQuestionsInOrder,
-      questionsToRetry
-    })
-    
-    if (questionsToRetry.length === 0) {
-      // All questions completed successfully
-      console.log('No questions to retry, going to complete page')
-      window.location.href = '/complete'
-      return
-    }
-    
-    // Limit to 3 questions for retry
-    const limitedQuestionsToRetry = questionsToRetry.slice(0, 3)
-    
-    console.log('Setting new question order (limited to 3):', limitedQuestionsToRetry)
-    setQuestionOrder(limitedQuestionsToRetry)
-    setCurrentQuestionIndex(0)
-    setPassedQuestions([])
-    setNeedsGuidanceQuestions([])
     resetChallenge()
   }
 
@@ -305,12 +255,27 @@ export default function Home() {
   }
 
   const goToNextQuestion = () => {
-    if (currentQuestionIndex < questionOrder.length - 1) {
-      setCurrentQuestionIndex(currentQuestionIndex + 1)
+    // If correct answer, remove from queue
+    if (isCorrectAnswer) {
+      const currentQuestionId = questionOrder[currentQuestionIndex]
+      const newQuestionOrder = questionOrder.filter(id => id !== currentQuestionId)
+      
+      console.log('Removing question from queue:', {
+        questionId: currentQuestionId,
+        remainingQuestions: newQuestionOrder.length
+      })
+      
+      setQuestionOrder(newQuestionOrder)
+      
+      // Adjust current index if needed
+      if (currentQuestionIndex >= newQuestionOrder.length) {
+        setCurrentQuestionIndex(0)
+      }
+      
       resetChallenge()
     } else {
-      // If this was the last question, reorganize and start over
-      reorganizeQuestions()
+      // Otherwise, move to next question
+      moveToNextQuestion()
     }
   }
 
@@ -323,7 +288,6 @@ export default function Home() {
     setUserAnswerNote('')
     setHintsUsed([])
     setShowHints(false)
-    setIsPassedQuestion(false)
   }
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -335,8 +299,6 @@ export default function Home() {
       setShowLearningModal(false)
     }
   }
-
-  const isCorrectAnswer = answerLevel && answerLevel !== 'needs_guidance'
 
   // Split Korean sentence into parts for rendering
   const koreanParts = currentQuestion?.korean_sentence?.split('____') || ['', '']
@@ -359,8 +321,8 @@ export default function Home() {
     })
   }
 
-  // Show loading if no current question
-  if (!currentQuestion) {
+  // Show loading if questions are still being initialized
+  if (!isInitialized) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-blue-100 to-purple-100 p-4">
         <div className="max-w-md mx-auto pt-12">
@@ -372,6 +334,26 @@ export default function Home() {
       </div>
     )
   }
+
+        // Show completion screen if all questions are completed
+      if (questionOrder.length === 0) {
+        return (
+          <div className="min-h-screen bg-gradient-to-br from-blue-100 to-purple-100 p-4">
+            <div className="max-w-md mx-auto pt-12">
+              <div className="text-center">
+                <h1 className="text-3xl font-bold text-gray-800 mb-2">Hanvoca</h1>
+                <p className="text-gray-600 mb-6">All questions completed!</p>
+                <button
+                  onClick={() => window.location.href = '/add-to-home'}
+                  className="bg-green-500 text-white px-6 py-3 rounded-lg font-medium hover:bg-green-600 transition-colors"
+                >
+                  홈 화면에 추가하기 🎉
+                </button>
+              </div>
+            </div>
+          </div>
+        )
+      }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-100 to-purple-100 p-4">
@@ -389,15 +371,12 @@ export default function Home() {
           </div>
         </div>
         
-                          {/* Question status indicator */}
+        {/* Question status indicator */}
         {(() => {
           const currentQuestionId = questionOrder[currentQuestionIndex]
-          if (currentQuestionId === undefined) return null
+          const status = questionStatuses[currentQuestionId]
           
-          const isPassed = passedQuestions.includes(currentQuestionId)
-          const isNeedsGuidance = needsGuidanceQuestions.includes(currentQuestionId)
-          
-          if (isPassed) {
+          if (status === 'passed') {
             return (
               <div className="flex justify-center mb-4">
                 <div className="bg-yellow-100 text-yellow-700 px-3 py-1 rounded-full text-sm font-medium">
@@ -405,7 +384,7 @@ export default function Home() {
                 </div>
               </div>
             )
-          } else if (isNeedsGuidance) {
+          } else if (status === 'needs_retry') {
             return (
               <div className="flex justify-center mb-4">
                 <div className="bg-orange-100 text-orange-700 px-3 py-1 rounded-full text-sm font-medium">
@@ -582,8 +561,6 @@ export default function Home() {
                 {feedback}
               </p>
               
-
-              
               {userAnswerNote && (
                 <div className="mt-2 p-2 bg-white rounded text-sm text-gray-700">
                   💡 {userAnswerNote}
@@ -599,9 +576,17 @@ export default function Home() {
                     >
                       🚀 Explore More Expressions
                     </button>
-                    {isLastQuestion && completedQuestions.length === questionOrder.length ? (
+                    {shouldShowComplete ? (
                       <button
-                        onClick={() => window.location.href = '/complete'}
+                        onClick={() => {
+                          // Remove last question from queue
+                          const currentQuestionId = questionOrder[currentQuestionIndex]
+                          const newQuestionOrder = questionOrder.filter(id => id !== currentQuestionId)
+                          setQuestionOrder(newQuestionOrder)
+                          
+                          // Go to add-to-home page
+                          window.location.href = '/add-to-home'
+                        }}
                         className="w-full bg-green-500 text-white py-2 rounded-lg font-medium hover:bg-green-600 transition-colors"
                       >
                         Complete All Challenges 🎉
