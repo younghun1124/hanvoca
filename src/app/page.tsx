@@ -347,7 +347,7 @@ export default function Home() {
                   onClick={() => window.location.href = '/add-to-home'}
                   className="bg-green-500 text-white px-6 py-3 rounded-lg font-medium hover:bg-green-600 transition-colors"
                 >
-                  홈 화면에 추가하기 🎉
+                  Add to Home Screen 🎉
                 </button>
               </div>
             </div>
@@ -400,7 +400,7 @@ export default function Home() {
         {!showFeedback && (
           <div className="text-center mb-4">
             <div className="bg-blue-50 text-blue-600 px-3 py-2 rounded-lg text-xs">
-              💡 Tip: Pass한 문제들은 나중에 다시 풀 수 있어요!
+              💡 Tip: Passed questions can be attempted again later!
             </div>
           </div>
         )}
