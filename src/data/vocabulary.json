@@ -1,241 +1,703 @@
 [
+
   {
+
     "id": 1,
-    "answer": "익혀서",
-    "korean_sentence": "그는 10년 동안 요리 기술을 _____ 전문 셰프가 되었다.",
-    "english_translation": "He mastered cooking skills for 10 years and became a professional chef.",
-    "highlight_word": "mastered",
+
+    "answer": "걸렸어요",
+
+    "korean_sentence": "집에서 학교까지 30분 ____.",
+
+    "english_translation": "It takes 30 minutes from home to school.",
+
+    "highlight_word": "takes",
+
     "acceptable_answers": {
-      "best": ["익혀서"],
-      "good": ["배워서", "습득해서"],
-      "acceptable": ["공부해서", "연마해서", "터득해서"]
+
+      "best": ["걸렸어요", "걸립니다"],
+
+      "good": ["소요돼요", "소요됩니다"],
+
+      "acceptable": ["소비돼요"]
+
     },
+
     "learning_notes": {
-      "익혀서": "Most natural expression. '익히다' means to develop proficiency through practice.",
-      "배워서": "Common expression, but '익히다' is more about mastering skills than just learning.",
-      "습득해서": "More formal expression, typically used in written Korean.",
-      "공부해서": "Understandable, but '익히다' (to master) is more natural than '공부하다' (to study) with skills.",
-      "연마해서": "Means to polish/refine skills, contextually appropriate.",
-      "터득해서": "Means to grasp or figure out by oneself, a good expression."
+
+      "걸렸어요": "Past tense of '걸리다'. Most common and natural for 'taking (time)'. '걸리다' has many meanings like to hang, to catch (a disease), to get caught.",
+
+      "소요돼요": "Means 'it is consumed/takes (time)', more formal, used for cost or time.",
+
+      "소비돼요": "Means 'is consumed' or 'is spent', typically for resources or energy, less natural for general time taken."
+
     },
+
     "hints": {
-      "semantic": "You need a word meaning 'to make skills your own through repeated practice and training.'",
-      "structural": "In casual speech, use 'ㅇㅋㅇㅅ' (native Korean), or in formal situations, 'ㅅㄷㅎㅅ' (Sino-Korean).",
-      "discovery": "For example, you could use **'익혀서'** - try typing it!"
+
+      "semantic": "You need a verb that means 'to require a certain amount of time'.",
+
+      "structural": "Often used with a duration (e.g., '30분').",
+
+      "discovery": "Think about how much time something 'consumes'. Try **'걸렸어요'**."
+
     }
+
   },
+
   {
+
     "id": 2,
-    "answer": "지내고",
-    "korean_sentence": "여행 중에 호텔에서 일주일 동안 _____ 있어요.",
-    "english_translation": "I'm staying at a hotel for a week during my trip.",
-    "highlight_word": "staying",
+
+    "answer": "고쳤어요",
+
+    "korean_sentence": "제 운전 습관을 ____.",
+
+    "english_translation": "I corrected/fixed my driving habits.",
+
+    "highlight_word": "corrected/fixed",
+
     "acceptable_answers": {
-      "best": ["지내고"],
-      "good": ["머물고", "있고"],
-      "acceptable": ["살고", "보내고"]
+
+      "best": ["고쳤어요"],
+
+      "good": ["바로잡았어요", "개선했어요"],
+
+      "acceptable": ["수정했어요", "변화시켰어요"]
+
     },
+
     "learning_notes": {
-      "지내고": "Most natural expression for staying at a hotel temporarily.",
-      "머물고": "Nearly same meaning as '지내고', refers to staying somewhere temporarily.",
-      "있고": "Simple and natural, but '지내고' is more specific for this context.",
-      "살고": "Implies permanent residence, doesn't fit well with short trips.",
-      "보내고": "Correct for 'spending time' but unnatural for 'staying somewhere'."
+
+      "고쳤어요": "Past tense of '고치다'. Most versatile for 'fixing' various things, including bad habits or errors, not just physical objects. It also means 'to repair'.",
+
+      "바로잡았어요": "Means 'straightened out' or 'corrected properly', very natural for habits or mistakes.",
+
+      "개선했어요": "Means 'improved', implies making something better, often used for systems or conditions.",
+
+      "수정했어요": "Means 'modified' or 'revised', typically for documents or plans.",
+
+      "변화시켰어요": "Means 'changed/transformed', too broad for simply 'fixing' a habit."
+
     },
+
     "hints": {
-      "semantic": "You need a word meaning 'to stay temporarily at a place while spending time there.'",
-      "structural": "Use native Korean words like 'ㅈㄴㄱ' or 'ㅁㅁㄱ'.",
-      "discovery": "For example, you could use **'지내고'** - try typing it!"
+
+      "semantic": "You need a verb that means 'to correct' or 'to mend' (a habit or a mistake).",
+
+      "structural": "Used with nouns like '습관' (habit) or '오류' (error).",
+
+      "discovery": "Think about how you'd say 'fix a mistake'. Try **'고쳤어요'**."
+
     }
+
   },
+
   {
+
     "id": 3,
-    "answer": "수리됐다",
-    "korean_sentence": "망가진 자동차가 정비소에서 _____.",
-    "english_translation": "The broken car was repaired at the garage.",
-    "highlight_word": "repaired",
+
+    "answer": "구했어요",
+
+    "korean_sentence": "아직 새 일자리를 ____.",
+
+    "english_translation": "I haven't found/obtained a new job yet.",
+
+    "highlight_word": "found/obtained",
+
     "acceptable_answers": {
-      "best": ["수리됐다", "수리되었다"],
-      "good": ["고쳐졌다", "정비됐다", "정비되었다"],
-      "acceptable": ["고쳐져서", "수선되었다"]
+
+      "best": ["구했어요", "구하지 못했어요"],
+
+      "good": ["찾았어요", "얻었어요"],
+
+      "acceptable": ["발견했어요"]
+
     },
+
     "learning_notes": {
-      "수리됐다": "Most accurate and common expression. '수리' is the technical term for repairing machines or vehicles.",
-      "고쳐졌다": "Native Korean word, more frequently used in daily conversation.",
-      "정비됐다": "Goes beyond simple repair - implies comprehensive inspection and maintenance.",
-      "수선되었다": "Understandable, but usually used for mending clothes or small items."
+
+      "구했어요": "Means 'to seek' or 'to obtain/find'. Commonly used for finding a job, house, or help. It also means 'to save/rescue'.",
+
+      "구하지 못했어요": "Negative form, directly means 'couldn't obtain/find'.",
+
+      "찾았어요": "Means 'found' (after searching for it), also natural for finding a job.",
+
+      "얻었어요": "Means 'got' or 'obtained', a general verb for acquisition.",
+
+      "발견했어요": "Means 'discovered', implies finding something unexpectedly, less natural for actively seeking a job."
+
     },
+
     "hints": {
-      "semantic": "You need a word meaning 'to fix or restore something broken back to its original state.'",
-      "structural": "In casual talk, use 'ㄱㅊㅈㄷ' (native Korean), or in formal situations, 'ㅅㄹㄷㅇㄷ' or 'ㅈㅂㄷㅇㄷ' (Sino-Korean).",
-      "discovery": "For example, you could use **'수리됐다'** - try typing it!"
+
+      "semantic": "You need a verb that means 'to search for and acquire something desirable, like a job or house'.",
+
+      "structural": "Often used with nouns like '일자리' (job) or '집' (house).",
+
+      "discovery": "Think about looking for something specific. Try **'구했어요'**."
+
     }
+
   },
+
   {
+
     "id": 4,
-    "answer": "완성했다",
-    "korean_sentence": "화가가 3년 만에 대작을 _____.",
-    "english_translation": "The painter completed his masterpiece after 3 years.",
-    "highlight_word": "completed",
+
+    "answer": "떨어졌어요",
+
+    "korean_sentence": "쌀이 다 ____.",
+
+    "english_translation": "The rice has all run out.",
+
+    "highlight_word": "run out",
+
     "acceptable_answers": {
-      "best": ["완성했다"],
-      "good": ["마쳤다", "끝냈다"],
-      "acceptable": ["완료했다", "마무리했다"]
+
+      "best": ["떨어졌어요"],
+
+      "good": ["다 썼어요", "없어졌어요"],
+
+      "acceptable": ["소비됐어요", "고갈됐어요"]
+
     },
+
     "learning_notes": {
-      "완성했다": "Most appropriate expression in the context of creating artwork.",
-      "마쳤다": "General meaning of 'finishing something', natural expression.",
-      "끝냈다": "Simple and direct, but lacks the sense of 'completion' or 'perfection'.",
-      "완료했다": "Better suited for business tasks or assignments.",
-      "마무리했다": "Emphasizes organizing or wrapping up the final stages."
+
+      "떨어졌어요": "Means 'to run out of (a supply)'. It also means 'to fall' or 'to fail (an exam/application)'. Its multi-meaning nature can be confusing.",
+
+      "다 썼어요": "Means 'used up completely', natural for supplies.",
+
+      "없어졌어요": "Means 'disappeared' or 'is gone', also natural for supplies running out.",
+
+      "소비됐어요": "Means 'was consumed', more formal and general.",
+
+      "고갈됐어요": "Means 'was depleted' (e.g., resources, energy), more formal and often used for larger scale depletion."
+
     },
+
     "hints": {
-      "semantic": "You need a word meaning 'to finish creating something from start to end with finalization.'",
-      "structural": "For artwork, use 'ㅇㅅㅎㄷ' (Sino-Korean), or for general tasks, 'ㅁㅊㄷ' or 'ㄲㄴㄷ' (native Korean).",
-      "discovery": "For example, you could use **'완성했다'** - try typing it!"
+
+      "semantic": "You need a verb that means a supply has been completely used up.",
+
+      "structural": "Used with nouns like '쌀' (rice), '돈' (money), '배터리' (battery).",
+
+      "discovery": "Think about things being 'gone' from a supply. Try **'떨어졌어요'**."
+
     }
+
   },
+
   {
+
     "id": 5,
-    "answer": "취득했다",
-    "korean_sentence": "그녀는 어제 운전면허를 _____.",
-    "english_translation": "She obtained her driver's license yesterday.",
-    "highlight_word": "obtained",
+
+    "answer": "맞았어요",
+
+    "korean_sentence": "어제 독감 주사를 ____.",
+
+    "english_translation": "I got a flu shot yesterday.",
+
+    "highlight_word": "got",
+
     "acceptable_answers": {
-      "best": ["취득했다"],
-      "good": ["받았다", "얻었다"],
-      "acceptable": ["획득했다", "따냈다"]
+
+      "best": ["맞았어요"],
+
+      "good": ["접종했어요", "주사했어요"],
+
+      "acceptable": ["했어요"]
+
     },
+
     "learning_notes": {
-      "취득했다": "Most accurate expression for obtaining licenses or certifications.",
-      "받았다": "Casual and natural everyday expression.",
-      "얻었다": "Good general expression meaning 'to get something'.",
-      "획득했다": "Slightly more formal expression.",
-      "따냈다": "Often used in spoken Korean, but may be inappropriate in formal situations."
+
+      "맞았어요": "Past tense of '맞다'. In this context, it means 'to receive (an injection/hit)'. Other meanings include 'to be correct', 'to fit', 'to be appropriate'.",
+
+      "접종했어요": "Means 'vaccinated' or 'inoculated', a more formal and specific term for getting a shot.",
+
+      "주사했어요": "Means 'injected', usually refers to the act of injecting by a medical professional, not receiving an injection by a patient.",
+
+      "했어요": "Means 'did', too general and unnatural for 'getting a shot'."
+
     },
+
     "hints": {
-      "semantic": "You need a word meaning 'to obtain something official like a license through proper procedures.'",
-      "structural": "In formal situations, use 'ㅊㄷㅎㄷ' or 'ㅎㄷㅎㄷ' (Sino-Korean), or in casual talk, 'ㅂㅇㄷ' or 'ㅇㅇㄷ' (native Korean).",
-      "discovery": "For example, you could use **'취득했다'** - try typing it!"
+
+      "semantic": "You need a verb that means 'to receive' an injection or a hit.",
+
+      "structural": "Used with nouns like '주사' (injection) or '벌' (punishment/hit).",
+
+      "discovery": "Think about 'receiving' a shot. Try **'맞았어요'**."
+
     }
+
   },
+
   {
+
     "id": 6,
-    "answer": "경비가",
-    "korean_sentence": "이번 출장 _____ 회사 예산을 초과했다.",
-    "english_translation": "This business trip expenses exceeded the company budget.",
-    "highlight_word": "expenses",
+
+    "answer": "묻었어요",
+
+    "korean_sentence": "옷에 흙이 ____.",
+
+    "english_translation": "Dirt got on my clothes.",
+
+    "highlight_word": "got on",
+
     "acceptable_answers": {
-      "best": ["경비가"],
-      "good": ["비용이", "지출이"],
-      "acceptable": ["돈이", "예산이"]
+
+      "best": ["묻었어요"],
+
+      "good": ["묻었어요 (묻히다)"],
+
+      "acceptable": ["묻혔어요", "달라붙었어요"]
+
     },
+
     "learning_notes": {
-      "경비가": "Most accurate expression for business trip or work-related expenses.",
-      "비용이": "Natural expression meaning 'costs' or 'money spent' in general.",
-      "지출이": "Means expenditure, commonly used in accounting or financial contexts.",
-      "돈이": "Too general for formal business contexts, may sound inappropriate.",
-      "예산이": "Refers to a pre-planned budget, doesn't fit the context."
+
+      "묻었어요": "Past tense of '묻다'. In this context, it means 'to get dirty' or 'to get on something'. It also means 'to ask' (묻다) or 'to bury' (묻다).",
+
+      "묻었어요 (묻히다)": "If dirt got on something *passively*, '묻다' (묻어서) is common. If *someone put* dirt on it, then '묻히다' (묻혔어요 - to get something dirty) is used. Here, the dirt got on by itself.",
+
+      "달라붙었어요": "Means 'stuck to' or 'adhered to', can be used but '묻다' is more common for general dirt/stains."
+
     },
+
     "hints": {
-      "semantic": "You need a word referring to money or costs spent for business trips or work purposes.",
-      "structural": "For business contexts, use 'ㄱㅂㄱ' or 'ㅂㅇㅇ' (Sino-Korean), or generally 'ㅈㅊㅇ'.",
-      "discovery": "For example, you could use **'경비가'** - try typing it!"
+
+      "semantic": "You need a verb that means dirt, dust, or a stain transferred onto something.",
+
+      "structural": "Used with a substance as the subject (e.g., '흙이', '먼지가', '얼룩이').",
+
+      "discovery": "Think about something 'sticking' or 'getting on' a surface. Try **'묻었어요'**."
+
     }
+
   },
+
   {
+
     "id": 7,
-    "answer": "소망한다",
-    "korean_sentence": "모든 부모는 자녀의 행복을 간절히 _____.",
-    "english_translation": "All parents earnestly wish for their children's happiness.",
-    "highlight_word": "wish",
+
+    "answer": "봤어요",
+
+    "korean_sentence": "친구를 오랜만에 ____.",
+
+    "english_translation": "I met a friend after a long time.",
+
+    "highlight_word": "met",
+
     "acceptable_answers": {
-      "best": ["소망한다"],
-      "good": ["바란다", "원한다"],
-      "acceptable": ["희망한다", "기원한다"]
+
+      "best": ["봤어요"],
+
+      "good": ["만났어요", "만나봤어요"],
+
+      "acceptable": ["방문했어요"]
+
     },
+
     "learning_notes": {
-      "소망한다": "Most emotionally deep expression, meaning to earnestly wish for something.",
-      "바란다": "Most commonly used natural expression in everyday speech.",
-      "원한다": "Simple and direct expression meaning to want or desire something.",
-      "희망한다": "Slightly more formal expression, used in writing or official situations.",
-      "기원한다": "Has a religious or ceremonial feeling, often used in prayers."
+
+      "봤어요": "Past tense of '보다'. While it generally means 'to see/watch', it's very commonly used for 'meeting' someone, especially casually or after some time. This is more common than '만나다' in some daily contexts.",
+
+      "만났어요": "The most standard and direct verb for 'to meet'.",
+
+      "만나봤어요": "Means 'have tried meeting' or 'have met before'.",
+
+      "방문했어요": "Means 'visited', implies going to their place, not just meeting."
+
     },
+
     "hints": {
-      "semantic": "You need a word meaning 'to deeply and earnestly wish for something to happen.'",
-      "structural": "For emotional situations, use 'ㅅㅁㅎㄷ' or 'ㅎㅁㅎㄷ' (Sino-Korean), or in daily life, 'ㅂㄹㄷ' or 'ㅇㅎㄷ' (native Korean).",
-      "discovery": "For example, you could use **'소망한다'** - try typing it!"
+
+      "semantic": "You need a common verb for 'meeting' someone, often implying seeing them after a break.",
+
+      "structural": "Often used with '친구를', '사람을', etc.",
+
+      "discovery": "Think about 'seeing' a friend. Try **'봤어요'**."
+
     }
+
   },
+
   {
+
     "id": 8,
-    "answer": "사고가",
-    "korean_sentence": "어제 고속도로에서 큰 교통 _____ 발생했다.",
-    "english_translation": "A major traffic accident occurred on the highway yesterday.",
-    "highlight_word": "accident",
+
+    "answer": "버리다",
+
+    "korean_sentence": "이런 기회는 절대 놓치지 ____.",
+
+    "english_translation": "You should never miss an opportunity like this.",
+
+    "highlight_word": "miss",
+
     "acceptable_answers": {
-      "best": ["사고가"],
-      "good": ["충돌이", "사건이"],
-      "acceptable": ["문제가", "일이"]
+
+      "best": ["버려야 해요", "버려야 합니다"],
+
+      "good": ["놓치면 안 돼요", "잃으면 안 돼요"],
+
+      "acceptable": ["없애면 안 돼요"]
+
     },
+
     "learning_notes": {
-      "사고가": "Most accurate and common expression for traffic accidents.",
-      "충돌이": "Good word that specifically describes vehicles colliding with each other.",
-      "사건이": "Can be used to mean 'incident', but more general than '사고' (accident).",
-      "문제가": "Too abstract, lacks the specificity of traffic accidents.",
-      "일이": "Most general expression, but insufficient to convey the seriousness of traffic accidents."
+
+      "버리다": "As an auxiliary verb, '버리다' is attached to other verbs to mean 'to do something completely/definitively', often with a nuance of regret, finality, or getting something done. Here it emphasizes 'not missing it at all' or 'letting it go completely'.",
+
+      "놓치면 안 돼요": "Means 'you shouldn't miss it', direct and very natural.",
+
+      "잃으면 안 돼요": "Means 'you shouldn't lose it', also natural.",
+
+      "없애면 안 돼요": "Means 'you shouldn't eliminate/destroy it', too strong and not appropriate for 'missing an opportunity'."
+
     },
+
     "hints": {
-      "semantic": "You need a word meaning 'unexpected collision or trouble involving vehicles or transportation.'",
-      "structural": "For traffic-related contexts, 'ㅅㄱㄱ' (Sino-Korean) is most accurate, or you can use 'ㅊㄷㅇ' or 'ㅅㄱㅇ'.",
-      "discovery": "For example, you could use **'사고가'** - try typing it!"
+
+      "semantic": "You need an auxiliary verb that adds a sense of completion or finality, often emphasizing a definitive action (or non-action).",
+
+      "structural": "Used after the main verb's '-아/어서' form (e.g., '놓치다' -> '놓쳐 버리다').",
+
+      "discovery": "Think about emphasizing 'doing it completely' or 'not letting it go at all'. Try **'버리다'**."
+
     }
+
   },
+
   {
+
     "id": 9,
-    "answer": "못",
-    "korean_sentence": "다리를 다쳐서 계단을 혼자 _____ 올라가요.",
-    "english_translation": "I can't climb the stairs alone because I injured my leg.",
-    "highlight_word": "can't",
+
+    "answer": "경우",
+
+    "korean_sentence": "비가 올 ____ 야외 활동은 취소됩니다.",
+
+    "english_translation": "In case it rains, outdoor activities will be canceled.",
+
+    "highlight_word": "case",
+
     "acceptable_answers": {
-      "best": ["못"],
-      "good": ["안", "할 수 없어서"],
-      "acceptable": ["어려워서"]
+
+      "best": ["경우"],
+
+      "good": ["상황", "때"],
+
+      "acceptable": ["경계"]
+
     },
+
     "learning_notes": {
-      "못": "Most accurate expression meaning 'unable to do due to lack of ability'.",
-      "안": "Implies not doing something intentionally, doesn't fit this context.",
-      "할 수 없어서": "Grammatically correct, but '못' is more concise and natural.",
-      "어려워서": "Correct for 'difficult', but weak in conveying 'impossibility'."
+
+      "경우": "Refers to a specific 'case', 'instance', or 'scenario'. It is frequently used in conditional or hypothetical statements (e.g., '~할 경우').",
+
+      "상황": "Means 'situation' or 'circumstance', broader than '경우' but sometimes interchangeable. Here, '경우' is more precise for 'in case of'.",
+
+      "때": "Means 'time' or 'when', too general for a specific 'case'.",
+
+      "경계": "Means 'boundary' or 'warning', completely unrelated."
+
     },
+
     "hints": {
-      "semantic": "You need a short word expressing inability to do something due to ability or circumstances.",
-      "structural": "Look for short native Korean negation words like 'ㅁ' or 'ㅇ'.",
-      "discovery": "For example, you could use **'못'** - try typing it!"
+
+      "semantic": "You need a noun that means a specific 'instance' or 'scenario', often used in conditional phrases.",
+
+      "structural": "Often follows a verb ending like '-(으)ㄹ' to form '-(으)ㄹ 경우'.",
+
+      "discovery": "Think about 'in the case of X' or 'if X happens'. Try **'경우'**."
+
     }
+
   },
+
   {
+
     "id": 10,
-    "answer": "마다",
-    "korean_sentence": "그는 매일 아침 _____ 30분씩 운동을 한다.",
-    "english_translation": "He exercises for 30 minutes every morning.",
-    "highlight_word": "every",
+
+    "answer": "조건",
+
+    "korean_sentence": "우리는 회사의 모든 ____을 수락했어요.",
+
+    "english_translation": "We accepted all the company's conditions.",
+
+    "highlight_word": "conditions",
+
     "acceptable_answers": {
-      "best": ["마다"],
-      "good": ["마다마다", "때마다"],
-      "acceptable": ["다", "씩"]
+
+      "best": ["조건"],
+
+      "good": ["요구", "사항"],
+
+      "acceptable": ["규정", "약속"]
+
     },
+
     "learning_notes": {
-      "마다": "Most natural expression meaning 'every morning', indicating recurring situations.",
-      "마다마다": "Same meaning but sounds a bit redundant.",
-      "때마다": "Similar meaning, but '아침마다' is more natural than '아침 때마다'.",
-      "다": "Grammatically possible, but '마다' is the more complete expression.",
-      "씩": "This particle indicates quantity/amount, doesn't fit this context."
+
+      "조건": "Refers to 'conditions', 'requirements', or 'terms' that must be met or agreed upon. Commonly used in contracts, deals, or proposals.",
+
+      "요구": "Means 'demand' or 'request', implies something asked for, not necessarily a set term.",
+
+      "사항": "Means 'matter' or 'item', too general for specific terms.",
+
+      "규정": "Means 'regulations' or 'rules', refers to established official rules, not specific terms of a deal.",
+
+      "약속": "Means 'promise' or 'appointment', not a condition of a contract."
+
     },
+
     "hints": {
-      "semantic": "You need a particle (postposition) that indicates recurring time or situations.",
-      "structural": "Look for a native Korean particle like 'ㅁㄷ' that naturally connects with '매일 아침' to create repetition meaning.",
-      "discovery": "For example, you could use **'마다'** - try typing it!"
+
+      "semantic": "You need a noun that refers to a specific requirement or term that must be fulfilled in an agreement.",
+
+      "structural": "Often used in legal, business, or agreement contexts.",
+
+      "discovery": "Think about the stipulations in a contract. Try **'조건'**."
+
     }
+
+  },
+
+  {
+
+    "id": 11,
+
+    "answer": "대책",
+
+    "korean_sentence": "환경 오염 문제에 대한 ____이 시급하다.",
+
+    "english_translation": "An urgent measure/solution is needed for the environmental pollution problem.",
+
+    "highlight_word": "measure/solution",
+
+    "acceptable_answers": {
+
+      "best": ["대책"],
+
+      "good": ["방안", "방법"],
+
+      "acceptable": ["해결책", "조치"]
+
+    },
+
+    "learning_notes": {
+
+      "대책": "Refers to a 'measure', 'countermeasure', or 'solution' specifically designed to deal with a problem or difficult situation. It implies a strategic plan of action.",
+
+      "방안": "Means 'plan' or 'scheme', a broader term for a proposed idea.",
+
+      "방법": "Means 'method' or 'way', a general term for how something is done.",
+
+      "해결책": "Means 'solution', specifically for resolving a problem. Can be very similar to 대책.",
+
+      "조치": "Means 'action' or 'step (taken)', often used for official actions being implemented."
+
+    },
+
+    "hints": {
+
+      "semantic": "You need a noun that refers to a strategic measure or plan to address a significant problem.",
+
+      "structural": "Often used with '문제에 대한' (for a problem).",
+
+      "discovery": "Think about a plan to counter a serious issue. Try **'대책'**."
+
+    }
+
+  },
+
+  {
+
+    "id": 12,
+
+    "answer": "곧",
+
+    "korean_sentence": "기차가 ____ 출발할 예정입니다.",
+
+    "english_translation": "The train is scheduled to depart soon.",
+
+    "highlight_word": "soon",
+
+    "acceptable_answers": {
+
+      "best": ["곧"],
+
+      "good": ["바로", "금방"],
+
+      "acceptable": ["조만간"]
+
+    },
+
+    "learning_notes": {
+
+      "곧": "Means 'soon' or 'shortly'. Refers to a relatively short time in the future. It's less immediate than '바로'.",
+
+      "바로": "Means 'immediately' or 'right away', emphasizing instantaneity. It can also mean 'right (location)'.",
+
+      "금방": "Means 'soon' or 'in no time', often implies a very short duration. Can also refer to something that *just* happened.",
+
+      "조만간": "Means 'sometime soon' or 'before long', often implying a slightly less immediate future than '곧', or a broader timeframe."
+
+    },
+
+    "hints": {
+
+      "semantic": "You need an adverb indicating that something will happen in the very near future.",
+
+      "structural": "Often precedes future tense verbs.",
+
+      "discovery": "Think about 'shortly' or 'in a moment'. Try **'곧'**."
+
+    }
+
+  },
+
+  {
+
+    "id": 13,
+
+    "answer": "다시",
+
+    "korean_sentence": "그 영화를 ____ 보고 싶어요.",
+
+    "english_translation": "I want to watch that movie again.",
+
+    "highlight_word": "again",
+
+    "acceptable_answers": {
+
+      "best": ["다시"],
+
+      "good": ["또", "재차"],
+
+      "acceptable": ["한 번 더"]
+
+    },
+
+    "learning_notes": {
+
+      "다시": "Most common and natural adverb for 'again' or 'anew'. Implies repeating an action or restarting something.",
+
+      "또": "Also means 'again', but can sometimes carry a nuance of 'also' or 'in addition' depending on context, or a simple repetition. '다시' often emphasizes doing something *over*.",
+
+      "재차": "More formal and written term for 'again' or 'repeatedly'.",
+
+      "한 번 더": "Means 'one more time', a phrase rather than a single adverb, also correct but '다시' is more concise."
+
+    },
+
+    "hints": {
+
+      "semantic": "You need an adverb that means to repeat an action.",
+
+      "structural": "Often precedes the verb that is being repeated.",
+
+      "discovery": "Think about 'doing something over'. Try **'다시'**."
+
+    }
+
+  },
+
+  {
+
+    "id": 14,
+
+    "answer": "언제나",
+
+    "korean_sentence": "그녀는 ____ 밝은 미소를 띠고 있다.",
+
+    "english_translation": "She always has a bright smile.",
+
+    "highlight_word": "always",
+
+    "acceptable_answers": {
+
+      "best": ["언제나"],
+
+      "good": ["항상", "늘"],
+
+      "acceptable": ["매번", "매일"]
+
+    },
+
+    "learning_notes": {
+
+      "언제나": "Means 'always', 'at any time'. Emphasizes consistency regardless of the specific time. It often carries a slightly more positive or enduring nuance than '항상'.",
+
+      "항상": "The most common and general adverb for 'always'. Often interchangeable with '언제나'.",
+
+      "늘": "Also means 'always', 'constantly', often used for habitual actions or continuous states.",
+
+      "매번": "Means 'every time', emphasizes each specific instance.",
+
+      "매일": "Means 'every day', specifically refers to daily occurrences, not general 'always'."
+
+    },
+
+    "hints": {
+
+      "semantic": "You need an adverb that signifies 'at all times' or 'on every occasion', describing a consistent trait or habit.",
+
+      "structural": "Often used to describe consistent states, habits, or emotions.",
+
+      "discovery": "Think about describing something that is true 'at any given moment'. Try **'언제나'**."
+
+    }
+
+  },
+
+  {
+
+    "id": 15,
+
+    "answer": "두려워요",
+
+    "korean_sentence": "미래가 ____.",
+
+    "english_translation": "I'm afraid of the future.",
+
+    "highlight_word": "afraid",
+
+    "acceptable_answers": {
+
+      "best": ["두려워요"],
+
+      "good": ["무서워요", "겁나요"],
+
+      "acceptable": ["걱정돼요", "불안해요"]
+
+    },
+
+    "learning_notes": {
+
+      "두려워요": "Means 'to be afraid' or 'to fear'. Often implies a deeper, more psychological sense of dread or apprehension, especially about abstract things, a future outcome, or a challenge.",
+
+      "무서워요": "Means 'to be scared' or 'frightened', often in response to something that evokes immediate fear (e.g., a ghost, a loud noise, a scary movie). Can be more instinctive.",
+
+      "겁나요": "Means 'to be scared' or 'to feel afraid', similar to '무섭다' but often implies feeling timid or losing courage.",
+
+      "걱정돼요": "Means 'to be worried', describes a state of anxiety rather than fear itself.",
+
+      "불안해요": "Means 'to be anxious' or 'uneasy', implies a feeling of insecurity or instability."
+
+    },
+
+    "hints": {
+
+      "semantic": "You need an adjective that expresses a feeling of fear or deep apprehension, especially towards something abstract or a potential future event.",
+
+      "structural": "Often used when the subject fears a situation or concept.",
+
+      "discovery": "Think about feeling apprehensive about something uncertain or daunting. Try **'두려워요'**."
+
+    }
+
   }
+
 ]
