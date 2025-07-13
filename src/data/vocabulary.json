@@ -211,8 +211,8 @@
     "id": 10,
     "answer": "조건",
     "korean_sentence": "우리는 회사의 ____을 수락했어요.",
-    "english_translation": "We accepted the company's condition.",
-    "highlight_word": "condition",
+    "english_translation": "We accepted the company's conditions.",
+    "highlight_word": "conditions",
     "acceptable_answers": {
       "best": ["조건"],
       "good": ["요구", "사항"],
