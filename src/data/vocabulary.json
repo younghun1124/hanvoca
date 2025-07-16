@@ -147,7 +147,7 @@
     "highlight_word": "met",
     "acceptable_answers": {
       "best": ["봤어요"],
-      "good": ["만났어요", "만나봤어요"],
+      "good": ["만났어요", "만나봤어요", "만났다", "만났어"],
       "acceptable": ["방문했어요"]
     },
     "learning_notes": {
@@ -165,7 +165,7 @@
   {
     "id": 8,
     "answer": "놓치면",
-    "korean_sentence": "이런 기회는 절대 _____ 안 돼요.",
+    "korean_sentence": "이런 기회는 절대 ____ 안 돼요.",
     "english_translation": "You should never miss an opportunity like this.",
     "highlight_word": "miss",
     "acceptable_answers": {
