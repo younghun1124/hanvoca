@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react'
 import vocabularyData from '../data/vocabulary.json'
 
-type AnswerLevel = 'best' | 'good' | 'acceptable' | 'needs_guidance'
+type AnswerLevel = 'perfect' | 'good' | 'acceptable' | 'incorrect'
 type HintLevel = 'semantic' | 'structural' | 'discovery'
 type QuestionStatus = 'unanswered' | 'answered' | 'passed' | 'needs_retry'
 
@@ -75,7 +75,7 @@ export default function Home() {
   const isLastQuestion = currentQuestionIndex === questionOrder.length - 1
   
   // Check if current answer is correct
-  const isCorrectAnswer = answerLevel && answerLevel !== 'needs_guidance'
+  const isCorrectAnswer = answerLevel && answerLevel !== 'incorrect'
   
   // Check if we need to show complete button (this is the last question and we just answered correctly)
   const shouldShowComplete = questionOrder.length === 1 && showFeedback && isCorrectAnswer
@@ -84,48 +84,6 @@ export default function Home() {
   if (currentQuestionIndex >= questionOrder.length && questionOrder.length > 0) {
     console.log('Current question index out of bounds, resetting to 0')
     setCurrentQuestionIndex(0)
-  }
-
-  // Check which level the user's answer falls into
-  const checkAnswerLevel = (userAnswer: string): AnswerLevel => {
-    if (!currentQuestion) return 'needs_guidance'
-    
-    const trimmedAnswer = userAnswer.trim()
-    
-    if (currentQuestion.acceptable_answers.best.includes(trimmedAnswer)) {
-      return 'best'
-    }
-    if (currentQuestion.acceptable_answers.good.includes(trimmedAnswer)) {
-      return 'good'
-    }
-    if (currentQuestion.acceptable_answers.acceptable.includes(trimmedAnswer)) {
-      return 'acceptable'
-    }
-    
-    return 'needs_guidance'
-  }
-
-  const generateFeedback = (level: AnswerLevel, userAnswer: string): string => {
-    if (!currentQuestion) return `🤔 '${userAnswer}'... 흥미로운 시도네요!`
-    
-    const note = currentQuestion.learning_notes[userAnswer as keyof typeof currentQuestion.learning_notes]
-    
-    switch (level) {
-      case 'best':
-        return `🎯 완벽해요! '${userAnswer}'는 이 문맥에서 가장 자연스러운 표현입니다.`
-      case 'good':
-        return `👍 좋은 표현이에요! '${userAnswer}'는 자연스럽게 사용할 수 있는 단어입니다.`
-      case 'acceptable':
-        return `✅ 맞는 표현이에요! '${userAnswer}'도 사용할 수 있는 단어입니다.`
-      case 'needs_guidance':
-        return `🤔 '${userAnswer}'... 흥미로운 시도네요! 혹시 '${currentQuestion.highlight_word}'의 의미를 다른 방식으로 표현해볼까요?`
-    }
-  }
-
-  const useHint = (hintType: HintLevel) => {
-    if (!hintsUsed.includes(hintType)) {
-      setHintsUsed([...hintsUsed, hintType])
-    }
   }
 
   // Get or create user ID for tracking
@@ -143,12 +101,10 @@ export default function Home() {
     return userId
   }
 
-  const checkAnswer = async (sentence: string, guess: string) => {
+  // checkAnswer 함수: 새로운 API 구조에 맞게 수정
+  const checkAnswer = async (origin: string, sentence: string) => {
     try {
-      console.log('Sending API request:', { sentence, guess })
-      
       const userId = getUserId()
-      
       const response = await fetch('https://whlfxkvrmdzgscnlklmn.supabase.co/functions/v1/hanvoca', {
         method: 'POST',
         headers: {
@@ -157,71 +113,63 @@ export default function Home() {
           'X-User-ID': userId || 'anonymous'
         },
         body: JSON.stringify({
-          sentence: sentence,
-          guess: guess,
+          origin,
+          sentence,
           user_id: userId
         })
       })
-
       if (response.ok) {
         const data = await response.json()
-        console.log('API Response:', data)
-        return data.feedback
+        return data // { feedback, accuracy }
       }
     } catch (error) {
-      console.error('API Error:', error)
+      return { feedback: 'Sorry, something went wrong.', accuracy: 'incorrect' }
     }
-    
-    // Always use our local smart feedback system
-    const level = checkAnswerLevel(guess)
-    return generateFeedback(level, guess)
+    return { feedback: 'Sorry, something went wrong.', accuracy: 'incorrect' }
   }
 
+  // handleSubmit: origin/Sentence 생성 및 API 호출
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    
-    if (!userInput.trim()) {
-      return
-    }
-
+    if (!userInput.trim()) return
     setIsSubmitting(true)
-    
-    // Check answer level first
-    const level = checkAnswerLevel(userInput.trim())
-    setAnswerLevel(level)
-    
-    // Update question status
+
     const currentQuestionId = questionOrder[currentQuestionIndex]
-    if (level === 'needs_guidance') {
-      setQuestionStatuses(prev => ({
-        ...prev,
-        [currentQuestionId]: 'needs_retry'
-      }))
-    } else {
-      setQuestionStatuses(prev => ({
-        ...prev,
-        [currentQuestionId]: 'answered'
-      }))
-    }
-    
-    // Get user's answer note for learning modal
-    const note = currentQuestion?.learning_notes[userInput.trim() as keyof typeof currentQuestion.learning_notes]
-    setUserAnswerNote(note || '')
-    
-    // Prepare sentence with the CORRECT ANSWER in brackets for API
-    const sentenceWithCorrectAnswer = currentQuestion?.korean_sentence.replace('____', `[${currentQuestion.answer}]`) || ''
-    
+    // 영어 문장: 정답 단어에 [ ] 표시
+    const origin = currentQuestion?.english_translation.replace(
+      currentQuestion.highlight_word,
+      `[${currentQuestion.highlight_word}]`
+    ) || ''
+    // 한글 문장: 사용자의 입력 단어에 [ ] 표시
+    const userWord = userInput.trim()
+    const sentence = currentQuestion?.korean_sentence.replace(
+      /____/,
+      `[${userWord}]`
+    ) || ''
+
     try {
-      const feedbackMessage = await checkAnswer(sentenceWithCorrectAnswer, userInput.trim())
+      const { feedback: feedbackMessage, accuracy } = await checkAnswer(origin, sentence)
+      console.log('answerLevel:', accuracy)
       setFeedback(feedbackMessage)
       setShowFeedback(true)
+      // accuracy에 따라 상태 업데이트
+      if (["perfect", "good", "acceptable"].includes(accuracy)) {
+        setAnswerLevel(accuracy as AnswerLevel)
+        setQuestionStatuses(prev => ({
+          ...prev,
+          [currentQuestionId]: 'answered'
+        }))
+      } else {
+        setAnswerLevel("incorrect")
+        setQuestionStatuses(prev => ({
+          ...prev,
+          [currentQuestionId]: 'needs_retry'
+        }))
+      }
     } catch (error) {
-      console.error('Error checking answer:', error)
-      const fallbackFeedback = generateFeedback(level, userInput.trim())
-      setFeedback(fallbackFeedback)
+      setFeedback('Sorry, something went wrong.')
       setShowFeedback(true)
     }
-    
     setIsSubmitting(false)
   }
 
@@ -355,6 +303,28 @@ export default function Home() {
         )
       }
 
+  // 피드백 상자 색상 결정
+  let feedbackBoxClass = ''
+  let feedbackTextClass = ''
+  switch (answerLevel) {
+    case 'perfect':
+    case 'good':
+      feedbackBoxClass = 'bg-green-50 border-green-200'
+      feedbackTextClass = 'text-green-700'
+      break
+    case 'acceptable':
+      feedbackBoxClass = 'bg-yellow-50 border-yellow-200'
+      feedbackTextClass = 'text-yellow-700'
+      break
+    case 'incorrect':
+      feedbackBoxClass = 'bg-red-50 border-red-200'
+      feedbackTextClass = 'text-red-700'
+      break
+    default:
+      feedbackBoxClass = 'bg-gray-50 border-gray-200'
+      feedbackTextClass = 'text-gray-700'
+  }
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-100 to-purple-100 p-4">
       <div className="max-w-md mx-auto pt-12">
@@ -454,7 +424,9 @@ export default function Home() {
                   {/* Hint 1: Semantic */}
                   <div>
                     <button
-                      onClick={() => useHint('semantic')}
+                      onClick={() => {
+                        if (!hintsUsed.includes('semantic')) setHintsUsed([...hintsUsed, 'semantic'])
+                      }}
                       disabled={hintsUsed.includes('semantic')}
                       className={`w-full text-left p-3 rounded-lg border transition-colors ${
                         hintsUsed.includes('semantic')
@@ -477,7 +449,9 @@ export default function Home() {
                   {hintsUsed.includes('semantic') && (
                     <div>
                       <button
-                        onClick={() => useHint('structural')}
+                        onClick={() => {
+                          if (!hintsUsed.includes('structural')) setHintsUsed([...hintsUsed, 'structural'])
+                        }}
                         disabled={hintsUsed.includes('structural')}
                         className={`w-full text-left p-3 rounded-lg border transition-colors ${
                           hintsUsed.includes('structural')
@@ -501,7 +475,9 @@ export default function Home() {
                   {hintsUsed.includes('structural') && (
                     <div>
                       <button
-                        onClick={() => useHint('discovery')}
+                        onClick={() => {
+                          if (!hintsUsed.includes('discovery')) setHintsUsed([...hintsUsed, 'discovery'])
+                        }}
                         disabled={hintsUsed.includes('discovery')}
                         className={`w-full text-left p-3 rounded-lg border transition-colors ${
                           hintsUsed.includes('discovery')
@@ -550,14 +526,8 @@ export default function Home() {
 
           {/* Feedback */}
           {showFeedback && (
-            <div className={`p-4 rounded-lg border-2 ${
-              isCorrectAnswer 
-                ? 'bg-green-50 border-green-200' 
-                : 'bg-orange-50 border-orange-200'
-            }`}>
-              <p className={`font-medium ${
-                isCorrectAnswer ? 'text-green-700' : 'text-orange-700'
-              }`}>
+            <div className={`p-4 rounded-lg border-2 ${feedbackBoxClass}`}>
+              <p className={`font-medium ${feedbackTextClass}`}>
                 {feedback}
               </p>
               
