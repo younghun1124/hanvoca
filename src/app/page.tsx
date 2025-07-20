@@ -31,9 +31,9 @@ export default function Home() {
     const today = new Date()
     const dayOfYear = Math.floor((today.getTime() - new Date(today.getFullYear(), 0, 0).getTime()) / (1000 * 60 * 60 * 24))
     
-    // Use day of year to determine which 3 questions to show
+    // Use day of year to determine which 5 questions to show
     const totalQuestions = vocabularyData.length
-    const questionsPerDay = 3
+    const questionsPerDay = 5
     
     // Create a deterministic order based on the day
     const startIndex = (dayOfYear * questionsPerDay) % totalQuestions
@@ -400,6 +400,11 @@ export default function Home() {
                   type="text"
                   value={userInput}
                   onChange={handleInputChange}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' && !isSubmitting && userInput.trim()) {
+                      handleSubmit(e)
+                    }
+                  }}
                   className="w-20 px-2 py-1 border-b-2 border-blue-400 bg-blue-50 text-center font-medium focus:outline-none focus:border-blue-600 focus:bg-blue-100"
                   placeholder="?"
                   disabled={isSubmitting}
