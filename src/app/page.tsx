@@ -331,7 +331,7 @@ export default function Home() {
         {/* Header */}
         <div className="text-center mb-8">
           <h1 className="text-3xl font-bold text-gray-800 mb-2">Hanvoca</h1>
-          <p className="text-gray-600 text-sm">Explore Korean vocabulary together</p>
+          <p className="text-gray-600 text-sm">Explore Korean vocabulary together, every day!</p>
         </div>
 
         {/* Progress indicator */}
