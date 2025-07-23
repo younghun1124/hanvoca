@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import vocabularyData from '../data/vocabulary.json'
 
 type AnswerLevel = 'perfect' | 'good' | 'acceptable' | 'incorrect'
@@ -269,6 +269,8 @@ export default function Home() {
     })
   }
 
+  // AutoWidthInput 컴포넌트 및 관련 코드 제거
+  // 문제 입력 input 부분을 원래대로 복원
   // Show loading if questions are still being initialized
   if (!isInitialized) {
     return (
@@ -331,7 +333,8 @@ export default function Home() {
         {/* Header */}
         <div className="text-center mb-8">
           <h1 className="text-3xl font-bold text-gray-800 mb-2">Hanvoca</h1>
-          <p className="text-gray-600 text-sm">Explore Korean vocabulary together, every day!</p>
+          <p className="text-gray-600 text-sx">Explore Korean vocabulary daily together!</p>
+          <p className="text-gray-600 text-sm">A new set of words is available every day.</p>
         </div>
 
         {/* Progress indicator */}
