@@ -261,16 +261,15 @@
     "answer": "비가",
     "korean_sentence": "올봄 ____ 평소보다 많았어요.",
     "english_translation": "This spring, there was more rain than usual.",
-    "highlight_word": "rainfall",
+    "highlight_word": "rain",
     "acceptable_answers": {
       "best": ["비가"],
-      "good": ["비", "비가 많이"],
+      "good": ["비"],
       "acceptable": ["비의 양", "강수량"]
     },
     "learning_notes": {
       "비가": "Subject form of ‘rain’.",
       "비": "Plain noun rain.",
-      "비가 많이": "Phrase ‘a lot of rain’.",
       "비의 양": "Amount of rain.",
       "강수량": "Technical ‘precipitation amount’ (advanced)."
     },
@@ -517,7 +516,7 @@
     "id": 23,
     "answer": "조금씩",
     "korean_sentence": "날이 풀리면서 눈이 ____ 녹고 있어요.",
-    "english_translation": "As the weather warms, the snow is melting little by little.",
+    "english_translation": "As the weather warms, the snow is melting gradually.",
     "highlight_word": "gradually",
     "acceptable_answers": {
       "best": ["조금씩"],
